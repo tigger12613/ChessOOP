@@ -189,4 +189,21 @@ public class ChessGame {
     public boolean ischeck(int chance){
         return boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck();
     }
+    
+    TODO:
+    //startGame;
+    public startGame();
+    //select a coordinate and return the valid cordinates the chess can move
+    public Coordinate[] validCoordinates(Coordinate coordinate);
+    //get the full board;
+    public board getboard();
+    //move chess at Coordinate a to coordinate b. if the move is valid return true else return false
+    public boolean move(Coordinate a,Coordinate b);
+    //return if the color king is be checkmate
+    public boolean checkmate(int color);
+    // return 0 if white win, 1 if black win, -1 is the game is not end.
+    public int isGameEnd()
+    // return if the color is be check
+    public boolean isCheck(int color);
+    
 }
