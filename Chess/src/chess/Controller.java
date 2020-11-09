@@ -41,7 +41,8 @@ public class Controller extends JFrame implements MouseListener {
 	private static King wk, bk;
 	private Cell c, previous;
 	private int chance = 0;
-	private Cell boardState[][];
+	// private Cell boardState[][];
+    private Piece state[][];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 	private JPanel board = new JPanel(new GridLayout(8, 8));
@@ -76,27 +77,27 @@ public class Controller extends JFrame implements MouseListener {
 	// Constructor
 	Controller() {
 		// variable initialization
-		wr01 = new Rook("WR01", "White_Rook.png", 0);
-		wr02 = new Rook("WR02", "White_Rook.png", 0);
-		br01 = new Rook("BR01", "Black_Rook.png", 1);
-		br02 = new Rook("BR02", "Black_Rook.png", 1);
-		wk01 = new Knight("WK01", "White_Knight.png", 0);
-		wk02 = new Knight("WK02", "White_Knight.png", 0);
-		bk01 = new Knight("BK01", "Black_Knight.png", 1);
-		bk02 = new Knight("BK02", "Black_Knight.png", 1);
-		wb01 = new Bishop("WB01", "White_Bishop.png", 0);
-		wb02 = new Bishop("WB02", "White_Bishop.png", 0);
-		bb01 = new Bishop("BB01", "Black_Bishop.png", 1);
-		bb02 = new Bishop("BB02", "Black_Bishop.png", 1);
-		wq = new Queen("WQ", "White_Queen.png", 0);
-		bq = new Queen("BQ", "Black_Queen.png", 1);
-		wk = new King("WK", "White_King.png", 0, 7, 3);
-		bk = new King("BK", "Black_King.png", 1, 0, 3);
+		wr01 = new Rook("WR01", "White_Rook.png", 0, 7, 0, state);
+		wr02 = new Rook("WR02", "White_Rook.png", 0, 7, 7, state);
+		br01 = new Rook("BR01", "Black_Rook.png", 1, 0, 0, state);
+		br02 = new Rook("BR02", "Black_Rook.png", 1, 0, 7, state);
+		wk01 = new Knight("WK01", "White_Knight.png", 0, 7 ,1, state);
+		wk02 = new Knight("WK02", "White_Knight.png", 0, 7, 6, state);
+		bk01 = new Knight("BK01", "Black_Knight.png", 1, 0, 1, state);
+		bk02 = new Knight("BK02", "Black_Knight.png", 1, 0, 6, state);
+		wb01 = new Bishop("WB01", "White_Bishop.png", 0, 7, 2, state);
+		wb02 = new Bishop("WB02", "White_Bishop.png", 0, 7, 5, state);
+		bb01 = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2, state);
+		bb02 = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5, state);
+		wq = new Queen("WQ", "White_Queen.png", 0, 7, 4, state);
+		bq = new Queen("BQ", "Black_Queen.png", 1, 0, 4, state);
+		wk = new King("WK", "White_King.png", 0, 7, 3, state);
+		bk = new King("BK", "Black_King.png", 1, 0, 3, state);
 		wp = new Pawn[8];
 		bp = new Pawn[8];
-		for (int i = 0; i < 8; i++) {
-			wp[i] = new Pawn("WP0" + (i + 1), "White_Pawn.png", 0);
-			bp[i] = new Pawn("BP0" + (i + 1), "Black_Pawn.png", 1);
+		for (int j = 0; j < 8; j++) {
+			wp[i] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j, state);
+			bp[i] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j, state);
 		}
 
 		timeRemaining = 60;
@@ -198,7 +199,7 @@ public class Controller extends JFrame implements MouseListener {
 		controlPanel.add(BlackPlayer);
 
 		// Defining all the Cells
-		boardState = new Cell[8][8];
+		/*boardState = new Cell[8][8];
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++) {
 				P = null;
@@ -242,7 +243,7 @@ public class Controller extends JFrame implements MouseListener {
 				cell.addMouseListener(this);
 				board.add(cell);
 				boardState[i][j] = cell;
-			}
+			}*/
 		showPlayer = new JPanel(new FlowLayout());
 		showPlayer.add(timeSlider);
 		JLabel setTime = new JLabel("Set Timer(in mins):");
@@ -340,7 +341,7 @@ public class Controller extends JFrame implements MouseListener {
 	// Function to check if the king will be in danger if the given move is made
 	private boolean willkingbeindanger(Cell fromcell, Cell tocell) {
 		Cell newboardstate[][] = new Cell[8][8];
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++) {
 				try {
 					newboardstate[i][j] = new Cell(boardState[i][j]);
@@ -349,7 +350,8 @@ public class Controller extends JFrame implements MouseListener {
 					System.out.println("There is a problem with cloning !!");
 				}
 			}
-
+		}
+		
 		if (newboardstate[tocell.x][tocell.y].getpiece() != null)
 			newboardstate[tocell.x][tocell.y].removePiece();
 
