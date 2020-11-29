@@ -53,138 +53,86 @@ public class ChessGame {
 			return bk;
     }
 
-    public Cell[][] setBoard(JPanel board){
-        pieces.Piece P;
-        Cell cell;
-        // Defining all the Cells
-		boardState = new Cell[8][8];
-		for (int i = 0; i < 8; i++){
-			for (int j = 0; j < 8; j++) {
-				P = null;
-				if (i == 0 && j == 0)
-					P = br01;
-				else if (i == 0 && j == 7)
-					P = br02;
-				else if (i == 7 && j == 0)
-					P = wr01;
-				else if (i == 7 && j == 7)
-					P = wr02;
-				else if (i == 0 && j == 1)
-					P = bk01;
-				else if (i == 0 && j == 6)
-					P = bk02;
-				else if (i == 7 && j == 1)
-					P = wk01;
-				else if (i == 7 && j == 6)
-					P = wk02;
-				else if (i == 0 && j == 2)
-					P = bb01;
-				else if (i == 0 && j == 5)
-					P = bb02;
-				else if (i == 7 && j == 2)
-					P = wb01;
-				else if (i == 7 && j == 5)
-					P = wb02;
-				else if (i == 0 && j == 3)
-					P = bk;
-				else if (i == 0 && j == 4)
-					P = bq;
-				else if (i == 7 && j == 3)
-					P = wk;
-				else if (i == 7 && j == 4)
-					P = wq;
-				else if (i == 1)
-					P = bp[j];
-				else if (i == 6)
-					P = wp[j];
-				cell = new Cell(i, j, P);
-				board.add(cell);
-				boardState[i][j] = cell;
-            }
-        }
-        return boardState;
-    }
-
     // Function to check if the king will be in danger if the given move is made
-	public boolean willkingbeindanger(Cell fromcell, Cell tocell, int chance) {
-		Cell newboardstate[][] = new Cell[8][8];
-		for (int i = 0; i < 8; i++)
-			for (int j = 0; j < 8; j++) {
-				try {
-					newboardstate[i][j] = new Cell(boardState[i][j]);
-				} catch (CloneNotSupportedException e) {
-					e.printStackTrace();
-					System.out.println("There is a problem with cloning !!");
-				}
-			}
+	// public boolean willkingbeindanger(Cell fromcell, Cell tocell, int chance) {
+	// 	Cell newboardstate[][] = new Cell[8][8];
+	// 	for (int i = 0; i < 8; i++)
+	// 		for (int j = 0; j < 8; j++) {
+	// 			try {
+	// 				newboardstate[i][j] = new Cell(boardState[i][j]);
+	// 			} catch (CloneNotSupportedException e) {
+	// 				e.printStackTrace();
+	// 				System.out.println("There is a problem with cloning !!");
+	// 			}
+	// 		}
 
-		if (newboardstate[tocell.x][tocell.y].getpiece() != null)
-			newboardstate[tocell.x][tocell.y].removePiece();
+	// 	if (newboardstate[tocell.x][tocell.y].getpiece() != null)
+	// 		newboardstate[tocell.x][tocell.y].removePiece();
 
-		newboardstate[tocell.x][tocell.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-		if (newboardstate[tocell.x][tocell.y].getpiece() instanceof King) {
-			((King) (newboardstate[tocell.x][tocell.y].getpiece())).setx(tocell.x);
-			((King) (newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
-		}
-		newboardstate[fromcell.x][fromcell.y].removePiece();
-		if (((King) (newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece()))
-				.isindanger(newboardstate) == true)
-			return true;
-		else
-			return false;
-    }
+	// 	newboardstate[tocell.x][tocell.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+	// 	if (newboardstate[tocell.x][tocell.y].getpiece() instanceof King) {
+	// 		((King) (newboardstate[tocell.x][tocell.y].getpiece())).setx(tocell.x);
+	// 		((King) (newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
+	// 	}
+	// 	newboardstate[fromcell.x][fromcell.y].removePiece();
+	// 	if (((King) (newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece()))
+	// 			.isindanger(newboardstate) == true)
+	// 		return true;
+	// 	else
+	// 		return false;
+    // }
     
     // A Function to filter the possible moves when the king of the current player
 	// is under Check
-	private ArrayList<Cell> incheckfilter(ArrayList<Cell> destlist, Cell fromcell, int color) {
-		ArrayList<Cell> newlist = new ArrayList<Cell>();
-		Cell newboardstate[][] = new Cell[8][8];
-		ListIterator<Cell> it = destlist.listIterator();
-		int x, y;
-		while (it.hasNext()) {
-			for (int i = 0; i < 8; i++)
-				for (int j = 0; j < 8; j++) {
-					try {
-						newboardstate[i][j] = new Cell(boardState[i][j]);
-					} catch (CloneNotSupportedException e) {
-						e.printStackTrace();
-					}
-				}
-			Cell tempc = it.next();
-			if (newboardstate[tempc.x][tempc.y].getpiece() != null)
-				newboardstate[tempc.x][tempc.y].removePiece();
-			newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-			x = getKing(color).getx();
-			y = getKing(color).gety();
-			if (newboardstate[tempc.x][tempc.y].getpiece() instanceof King) {
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-				x = tempc.x;
-				y = tempc.y;
-			}
-			newboardstate[fromcell.x][fromcell.y].removePiece();
-			if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) == false))
-				newlist.add(tempc);
-		}
-		return newlist;
-    }
+	// private ArrayList<Cell> incheckfilter(ArrayList<Cell> destlist, Cell fromcell, int color) {
+	// 	ArrayList<Cell> newlist = new ArrayList<Cell>();
+	// 	Cell newboardstate[][] = new Cell[8][8];
+	// 	ListIterator<Cell> it = destlist.listIterator();
+	// 	int x, y;
+	// 	while (it.hasNext()) {
+	// 		for (int i = 0; i < 8; i++)
+	// 			for (int j = 0; j < 8; j++) {
+	// 				try {
+	// 					newboardstate[i][j] = new Cell(boardState[i][j]);
+	// 				} catch (CloneNotSupportedException e) {
+	// 					e.printStackTrace();
+	// 				}
+	// 			}
+	// 		Cell tempc = it.next();
+	// 		if (newboardstate[tempc.x][tempc.y].getpiece() != null)
+	// 			newboardstate[tempc.x][tempc.y].removePiece();
+	// 		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+	// 		x = getKing(color).getx();
+	// 		y = getKing(color).gety();
+	// 		if (newboardstate[tempc.x][tempc.y].getpiece() instanceof King) {
+	// 			((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
+	// 			((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
+	// 			x = tempc.x;
+	// 			y = tempc.y;
+	// 		}
+	// 		newboardstate[fromcell.x][fromcell.y].removePiece();
+	// 		if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) == false))
+	// 			newlist.add(tempc);
+	// 	}
+	// 	return newlist;
+    // }
     // A function to check if the King is check-mate. The Game Ends if this function
 	// returns true.
-	public boolean checkmate(int color) {
-		ArrayList<Cell> dlist = new ArrayList<Cell>();
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				if (boardState[i][j].getpiece() != null && boardState[i][j].getpiece().getcolor() == color) {
-					dlist.clear();
-					dlist = boardState[i][j].getpiece().move(boardState, i, j);
-					dlist = incheckfilter(dlist, boardState[i][j], color);
-					if (dlist.size() != 0)
-						return false;
-				}
-			}
-		}
-		return true;
-    }
+	// public boolean checkmate(int color) {
+	// 	ArrayList<Cell> dlist = new ArrayList<Cell>();
+	// 	for (int i = 0; i < 8; i++) {
+	// 		for (int j = 0; j < 8; j++) {
+	// 			if (boardState[i][j].getpiece() != null && boardState[i][j].getpiece().getcolor() == color) {
+	// 				dlist.clear();
+	// 				dlist = boardState[i][j].getpiece().move(boardState, i, j);
+	// 				dlist = incheckfilter(dlist, boardState[i][j], color);
+	// 				if (dlist.size() != 0)
+	// 					return false;
+	// 			}
+	// 		}
+	// 	}
+	// 	return true;
+    // }
     
     public boolean ischeck(int chance){
         return boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck();

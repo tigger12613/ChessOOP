@@ -8,7 +8,7 @@ import javax.swing.event.ChangeListener;
 
 //import org.w3c.dom.events.MouseEvent;
 
-import pieces.*;
+//import pieces.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -188,11 +188,14 @@ public class Controller extends JFrame implements MouseListener {
 		// }
 
 		//new
-		// for(int i=0;i<8;i++){
-		// 	for(int j=0;j<8;j++){
-		// 		board_block[i][j].addMouseListener(this);
-		// 	}
-		// }
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				Cell cell = new Cell(i, j);
+				board.add(cell);
+				board_block[i][j] = cell;
+				board_block[i][j].addMouseListener(this);
+			}
+		}
 		//
 
 		showPlayer = new JPanel(new FlowLayout());

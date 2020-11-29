@@ -21,7 +21,7 @@ public class Cell extends JPanel implements Cloneable {
 	private boolean ischeck = false;
 
 	// Constructors
-	public Cell(int x, int y, Piece p) {
+	public Cell(int x, int y) {
 		this.x = x;
 		this.y = y;
 
@@ -104,5 +104,10 @@ public class Cell extends JPanel implements Cloneable {
 	public boolean ischeck() // Function to check if the current cell is in check
 	{
 		return ischeck;
+	}
+
+	//TODO:should be removed
+	public Piece getpiece(){
+		return new Pawn("1", "wp", 1);
 	}
 }
