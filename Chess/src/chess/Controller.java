@@ -42,7 +42,7 @@ public class Controller extends JFrame implements MouseListener {
 	private Cell c, previous;
 	private int chance = 0;
 	// private Cell boardState[][];
-    private Piece state[][];
+    private Piece state[][] = new Piece[8][8];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 	private JPanel board = new JPanel(new GridLayout(8, 8));
@@ -77,27 +77,50 @@ public class Controller extends JFrame implements MouseListener {
 	// Constructor
 	Controller() {
 		// variable initialization
-		wr01 = new Rook("WR01", "White_Rook.png", 0, 7, 0, state);
-		wr02 = new Rook("WR02", "White_Rook.png", 0, 7, 7, state);
-		br01 = new Rook("BR01", "Black_Rook.png", 1, 0, 0, state);
-		br02 = new Rook("BR02", "Black_Rook.png", 1, 0, 7, state);
-		wk01 = new Knight("WK01", "White_Knight.png", 0, 7 ,1, state);
-		wk02 = new Knight("WK02", "White_Knight.png", 0, 7, 6, state);
-		bk01 = new Knight("BK01", "Black_Knight.png", 1, 0, 1, state);
-		bk02 = new Knight("BK02", "Black_Knight.png", 1, 0, 6, state);
-		wb01 = new Bishop("WB01", "White_Bishop.png", 0, 7, 2, state);
-		wb02 = new Bishop("WB02", "White_Bishop.png", 0, 7, 5, state);
-		bb01 = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2, state);
-		bb02 = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5, state);
-		wq = new Queen("WQ", "White_Queen.png", 0, 7, 4, state);
-		bq = new Queen("BQ", "Black_Queen.png", 1, 0, 4, state);
-		wk = new King("WK", "White_King.png", 0, 7, 3, state);
-		bk = new King("BK", "Black_King.png", 1, 0, 3, state);
-		wp = new Pawn[8];
-		bp = new Pawn[8];
+//		wr01 = new Rook("WR01", "White_Rook.png", 0, 7, 0, state);
+//		wr02 = new Rook("WR02", "White_Rook.png", 0, 7, 7, state);
+//		br01 = new Rook("BR01", "Black_Rook.png", 1, 0, 0, state);
+//		br02 = new Rook("BR02", "Black_Rook.png", 1, 0, 7, state);
+//		wk01 = new Knight("WK01", "White_Knight.png", 0, 7 ,1, state);
+//		wk02 = new Knight("WK02", "White_Knight.png", 0, 7, 6, state);
+//		bk01 = new Knight("BK01", "Black_Knight.png", 1, 0, 1, state);
+//		bk02 = new Knight("BK02", "Black_Knight.png", 1, 0, 6, state);
+//		wb01 = new Bishop("WB01", "White_Bishop.png", 0, 7, 2, state);
+//		wb02 = new Bishop("WB02", "White_Bishop.png", 0, 7, 5, state);
+//		bb01 = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2, state);
+//		bb02 = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5, state);
+//		wq = new Queen("WQ", "White_Queen.png", 0, 7, 4, state);
+//		bq = new Queen("BQ", "Black_Queen.png", 1, 0, 4, state);
+//		wk = new King("WK", "White_King.png", 0, 7, 3, state);
+//		bk = new King("BK", "Black_King.png", 1, 0, 3, state);
+//		wp = new Pawn[8];
+//		bp = new Pawn[8];
+//		for (int j = 0; j < 8; j++) {
+//			wp[j] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j, state);
+//			bp[j] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j, state);
+//		}
+		// variable initialization
+		state[7][0] = new Rook("WR01", "White_Rook.png", 0, 7, 0);
+		state[7][7] = new Rook("WR02", "White_Rook.png", 0, 7, 7);
+		state[0][0] = new Rook("BR01", "Black_Rook.png", 1, 0, 0);
+		state[0][7] = new Rook("BR02", "Black_Rook.png", 1, 0, 7);
+		state[7][1] = new Knight("WK01", "White_Knight.png", 0, 7 ,1);
+		state[7][6] = new Knight("WK02", "White_Knight.png", 0, 7, 6);
+		state[0][1] = new Knight("BK01", "Black_Knight.png", 1, 0, 1);
+		state[0][6] = new Knight("BK02", "Black_Knight.png", 1, 0, 6);
+		state[7][2] = new Bishop("WB01", "White_Bishop.png", 0, 7, 2);
+		state[7][5] = new Bishop("WB02", "White_Bishop.png", 0, 7, 5);
+		state[0][2] = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2);
+		state[0][5] = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5);
+		state[7][4] = new Queen("WQ", "White_Queen.png", 0, 7, 4);
+		state[0][4] = new Queen("BQ", "Black_Queen.png", 1, 0, 4);
+		wk = new King("WK", "White_King.png", 0, 7, 3);
+		bk = new King("BK", "Black_King.png", 1, 0, 3);
+		state[7][3] = wk;
+		state[0][3] = bk;
 		for (int j = 0; j < 8; j++) {
-			wp[i] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j, state);
-			bp[i] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j, state);
+			state[6][j] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j);
+			state[1][j] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j);
 		}
 
 		timeRemaining = 60;
@@ -292,7 +315,7 @@ public class Controller extends JFrame implements MouseListener {
 	// verse
 	// It is made public because it is to be accessed in the Time Class
 	public void changechance() {
-		if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck()) {
+		if (getKing(chance).checkState()) {
 			chance ^= 1;
 			gameend();
 		}
@@ -317,10 +340,12 @@ public class Controller extends JFrame implements MouseListener {
 
 	// A function to retrieve the Black King or White King
 	private King getKing(int color) {
-		if (color == 0)
+		if (color == 0) {
 			return wk;
-		else
+		}
+		else {
 			return bk;
+		}
 	}
 
 	// A function to clean the highlights of possible destination cells
@@ -339,101 +364,80 @@ public class Controller extends JFrame implements MouseListener {
 	}
 
 	// Function to check if the king will be in danger if the given move is made
-	private boolean willkingbeindanger(Cell fromcell, Cell tocell) {
-		Cell newboardstate[][] = new Cell[8][8];
+	private boolean willkingbeindanger(Piece frompiece, Position dest) {
+		Piece newboardstate[][] = new Piece[8][8];
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++) {
 				try {
-					newboardstate[i][j] = new Cell(boardState[i][j]);
+					newboardstate[i][j] = state[i][j].getcopy();
 				} catch (CloneNotSupportedException e) {
-					e.printStackTrace();
-					System.out.println("There is a problem with cloning !!");
+					newboardstate[i][j] = null;
+				} catch (NullPointerException e) {
+					newboardstate[i][j] = null;
 				}
 			}
 		}
+		newboardstate[dest.getXPosition()][dest.getYPosition()] = frompiece;
+		newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+		frompiece.setXPosition(dest.getXPosition());
+		frompiece.setYPosition(dest.getYPosition());
 		
-		if (newboardstate[tocell.x][tocell.y].getpiece() != null)
-			newboardstate[tocell.x][tocell.y].removePiece();
-
-		newboardstate[tocell.x][tocell.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-		if (newboardstate[tocell.x][tocell.y].getpiece() instanceof King) {
-			((King) (newboardstate[tocell.x][tocell.y].getpiece())).setx(tocell.x);
-			((King) (newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
-		}
-		newboardstate[fromcell.x][fromcell.y].removePiece();
-		if (((King) (newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece()))
-				.isindanger(newboardstate) == true)
+		King currentKing = getKing(chance);
+		if ( ((King) (newboardstate[currentKing.getXPosition()][currentKing.getYPosition()]) ).isindanger(newboardstate) == true)
 			return true;
 		else
 			return false;
 	}
 
 	// A function to eliminate the possible moves that will put the King in danger
-	private ArrayList<Cell> filterdestination(ArrayList<Cell> destlist, Cell fromcell) {
-		ArrayList<Cell> newlist = new ArrayList<Cell>();
-		Cell newboardstate[][] = new Cell[8][8];
-		ListIterator<Cell> it = destlist.listIterator();
-		int x, y;
+	private ArrayList<Position> filterdestination(ArrayList<Position> destlist, Piece frompiece) {
+		ArrayList<Position> newlist = new ArrayList<Position>();
+		Piece newboardstate[][] = new Piece[8][8];
+		ListIterator<Position> it = destlist.listIterator();
 		while (it.hasNext()) {
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					try {
-						newboardstate[i][j] = new Cell(boardState[i][j]);
+						newboardstate[i][j] = state[i][j].getcopy();
 					} catch (CloneNotSupportedException e) {
-						e.printStackTrace();
+						newboardstate[i][j] = null;
+					} catch (NullPointerException e) {
+						newboardstate[i][j] = null;
 					}
 				}
-
-			Cell tempc = it.next();
-			if (newboardstate[tempc.x][tempc.y].getpiece() != null)
-				newboardstate[tempc.x][tempc.y].removePiece();
-			newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-			x = getKing(chance).getx();
-			y = getKing(chance).gety();
-			if (newboardstate[fromcell.x][fromcell.y].getpiece() instanceof King) {
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-				x = tempc.x;
-				y = tempc.y;
 			}
-			newboardstate[fromcell.x][fromcell.y].removePiece();
-			if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) == false))
-				newlist.add(tempc);
+			Position destPosition = it.next();
+			newboardstate[destPosition.getXPosition()][destPosition.getYPosition()] = newboardstate[frompiece.getXPosition()][frompiece.getYPosition()];
+			newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+			if (getKing(chance).isindanger(state) == false) {
+				newlist.add(destPosition);
+			}
 		}
 		return newlist;
 	}
 
 	// A Function to filter the possible moves when the king of the current player
 	// is under Check
-	private ArrayList<Cell> incheckfilter(ArrayList<Cell> destlist, Cell fromcell, int color) {
-		ArrayList<Cell> newlist = new ArrayList<Cell>();
-		Cell newboardstate[][] = new Cell[8][8];
-		ListIterator<Cell> it = destlist.listIterator();
-		int x, y;
+	private ArrayList<Position> incheckfilter(ArrayList<Position> destlist, Piece frompiece, int color) {
+		ArrayList<Position> newlist = new ArrayList<Position>();
+		Piece newboardstate[][] = new Piece[8][8];
+		ListIterator<Position> it = destlist.listIterator();
 		while (it.hasNext()) {
 			for (int i = 0; i < 8; i++)
 				for (int j = 0; j < 8; j++) {
 					try {
-						newboardstate[i][j] = new Cell(boardState[i][j]);
+						newboardstate[i][j] = state[i][j].getcopy();
 					} catch (CloneNotSupportedException e) {
-						e.printStackTrace();
+						newboardstate[i][j] = null;
+					} catch (NullPointerException e) {
+						newboardstate[i][j] = null;
 					}
 				}
-			Cell tempc = it.next();
-			if (newboardstate[tempc.x][tempc.y].getpiece() != null)
-				newboardstate[tempc.x][tempc.y].removePiece();
-			newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-			x = getKing(color).getx();
-			y = getKing(color).gety();
-			if (newboardstate[tempc.x][tempc.y].getpiece() instanceof King) {
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-				((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-				x = tempc.x;
-				y = tempc.y;
-			}
-			newboardstate[fromcell.x][fromcell.y].removePiece();
-			if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) == false))
-				newlist.add(tempc);
+			Position destPosition = it.next();
+			newboardstate[destPosition.getXPosition()][destPosition.getYPosition()] = newboardstate[frompiece.getXPosition()][frompiece.getYPosition()];
+			newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+			if (getKing(chance).isindanger(state) == false)
+				newlist.add(destPosition);
 		}
 		return newlist;
 	}
@@ -441,19 +445,22 @@ public class Controller extends JFrame implements MouseListener {
 	// A function to check if the King is check-mate. The Game Ends if this function
 	// returns true.
 	public boolean checkmate(int color) {
-		ArrayList<Cell> dlist = new ArrayList<Cell>();
+		ArrayList<Position> dlist = new ArrayList<Position>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (boardState[i][j].getpiece() != null && boardState[i][j].getpiece().getcolor() == color) {
+				if (state[i][j] != null && state[i][j].getcolor() == color) {
 					dlist.clear();
-					dlist = boardState[i][j].getpiece().move(boardState, i, j);
-					dlist = incheckfilter(dlist, boardState[i][j], color);
+					dlist = state[i][j].move(state, i, j);
+					dlist = incheckfilter(dlist, state[i][j], color);
 					if (dlist.size() != 0)
 						return false;
 				}
 			}
 		}
 		return true;
+	}
+	public Piece getPiece(int x, int y) {
+		return state[x][y];
 	}
 
 	@SuppressWarnings("deprecation")

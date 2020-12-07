@@ -2,6 +2,8 @@ package pieces;
 
 import java.util.ArrayList;
 
+
+import chess.Position;
 import chess.Cell;
 
 /**
@@ -11,60 +13,62 @@ import chess.Cell;
 public class Rook extends Piece {
 
 	// Constructor
-	public Rook(String i, String p, int c) {
+	public Rook(String i, String p, int c, int x, int y) {
 		setId(i);
 		setPath(p);
 		setColor(c);
+		setXPosition(x);
+		setYPosition(y);
 	}
 
 	// Move function defined
-	public ArrayList<Cell> move(Cell state[][], int x, int y) {
+	public ArrayList<Position> move(Piece state[][], int x, int y) {
 		// Rook can move only horizontally or vertically
 		possiblemoves.clear();
 		int tempx = x - 1;
 		while (tempx >= 0) {
-			if (state[tempx][y].getpiece() == null)
-				possiblemoves.add(state[tempx][y]);
-			else if (state[tempx][y].getpiece().getcolor() == this.getcolor())
+			if (state[tempx][y] == null)
+				possiblemoves.add( new Position(tempx, y) );
+			else if (state[tempx][y].getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][y]);
+				possiblemoves.add( new Position(tempx, y) );
 				break;
 			}
 			tempx--;
 		}
 		tempx = x + 1;
 		while (tempx < 8) {
-			if (state[tempx][y].getpiece() == null)
-				possiblemoves.add(state[tempx][y]);
-			else if (state[tempx][y].getpiece().getcolor() == this.getcolor())
+			if (state[tempx][y] == null)
+				possiblemoves.add( new Position(tempx, y) );
+			else if (state[tempx][y].getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][y]);
+				possiblemoves.add( new Position(tempx, y) );
 				break;
 			}
 			tempx++;
 		}
 		int tempy = y - 1;
 		while (tempy >= 0) {
-			if (state[x][tempy].getpiece() == null)
-				possiblemoves.add(state[x][tempy]);
-			else if (state[x][tempy].getpiece().getcolor() == this.getcolor())
+			if (state[x][tempy] == null)
+				possiblemoves.add( new Position(x, tempy) );
+			else if (state[x][tempy].getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[x][tempy]);
+				possiblemoves.add( new Position(x, tempy) );
 				break;
 			}
 			tempy--;
 		}
 		tempy = y + 1;
 		while (tempy < 8) {
-			if (state[x][tempy].getpiece() == null)
-				possiblemoves.add(state[x][tempy]);
-			else if (state[x][tempy].getpiece().getcolor() == this.getcolor())
+			if (state[x][tempy] == null)
+				possiblemoves.add( new Position(x, tempy) );
+			else if (state[x][tempy].getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[x][tempy]);
+				possiblemoves.add( new Position(x, tempy) );
 				break;
 			}
 			tempy++;
