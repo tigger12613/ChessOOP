@@ -40,47 +40,20 @@ public class Controller extends JFrame implements MouseListener {
 	//private Cell c, previous;
 	// who can go, 0 is white, 1 is black
 	private int chance = 0;
-	// private Cell boardState[][];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 
 	private JPanel board = new JPanel(new GridLayout(8, 8));
-
-	// private JPanel wdetails = new JPanel(new GridLayout(3, 3));
-	// private JPanel bdetails = new JPanel(new GridLayout(3, 3));
-	// private JPanel wcombopanel = new JPanel();
-	// private JPanel bcombopanel = new JPanel();
-	// private JPanel controlPanel, WhitePlayer, BlackPlayer, temp, displayTime, showPlayer, time;
 	private JSplitPane split;
-	// private JLabel label, mov;
-	// private static JLabel CHNC;
-	// private Time timer;
 
 	private ControlPanel controlPanel;
 	private JPanel temp;
-	// private boolean selected = false, end = false;
-
 	private Container content;
-
-	// private ArrayList<Player> wplayer, bplayer;
-	// private ArrayList<String> Wnames = new ArrayList<String>();
-	// private ArrayList<String> Bnames = new ArrayList<String>();
-	// private JComboBox<String> wcombo, bcombo;
-
-	// private String wname = null, bname = null, winner = null;
-	// private String move;
-	// private Player tempPlayer;
-	// private JScrollPane wscroll, bscroll;
-	// private String[] WNames = {}, BNames = {};
-	// private JSlider timeSlider;
 	private BufferedImage image;
-	// private Button startButton, wselect, bselect, WNewPlayer, BNewPlayer;
 	public static int timeRemaining = 60;
 
 	// new
-	// private Cell board_block[][] = new Cell[8][8];
 	private BoardView boardView = new BoardView();
-
 	private Cell selectedCell;
 
 	// Constructor
@@ -89,48 +62,13 @@ public class Controller extends JFrame implements MouseListener {
 		chessGame = new ChessGame();
 		chance = 0;
 		controlPanel = new ControlPanel();
-		// timeRemaining = 60;
-		// timeSlider = new TimeSlider();
 		controlPanel.timeSlider.addChangeListener(new TimeChange());
-		// move = "White";
-		// wname = null;
-		// bname = null;
-		// winner = null;
 
 		board = new JPanel(new GridLayout(8, 8));
-
-		// wdetails = new JPanel(new GridLayout(3, 3));
-		// bdetails = new JPanel(new GridLayout(3, 3));
-		// bcombopanel = new JPanel();
-		// wcombopanel = new JPanel();
-		// Wnames = new ArrayList<String>();
-		// Bnames = new ArrayList<String>();
 
 		board.setMinimumSize(new Dimension(800, 700));
 		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
 		this.setIconImage(img.getImage());
-
-		// // Time Slider Details
-		// timeSlider.setMinimum(1);
-		// timeSlider.setMaximum(15);
-		// timeSlider.setValue(1);
-		// timeSlider.setMajorTickSpacing(2);
-		// timeSlider.setPaintLabels(true);
-		// timeSlider.setPaintTicks(true);
-		// timeSlider.addChangeListener(new TimeChange());
-
-		// Fetching Details of all Players
-		// wplayer = Player.fetch_players();
-		// Iterator<Player> witr = wplayer.iterator();
-		// while (witr.hasNext())
-		// 	Wnames.add(witr.next().name());
-
-		// bplayer = Player.fetch_players();
-		// Iterator<Player> bitr = bplayer.iterator();
-		// while (bitr.hasNext())
-		// 	Bnames.add(bitr.next().name());
-		// WNames = Wnames.toArray(WNames);
-		// BNames = Bnames.toArray(BNames);
 
 		// Cell cell;
 		board.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -143,58 +81,12 @@ public class Controller extends JFrame implements MouseListener {
 		
 		
 		content.setLayout(new BorderLayout());
-		// controlPanel.setLayout(new GridLayout(3, 3));
-		// controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,
-		// 		TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.ORANGE));
+		controlPanel.wselect.addActionListener(new SelectHandler(0));
+		controlPanel.bselect.addActionListener(new SelectHandler(1));
 
-		// Defining the Player Box in Control Panel
-		// WhitePlayer = new JPanel();
-		// WhitePlayer.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,
-		// 		TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
-		// WhitePlayer.setLayout(new BorderLayout());
-
-		// BlackPlayer = new JPanel();
-		// BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,
-		// 		TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.BLUE));
-		// BlackPlayer.setLayout(new BorderLayout());
-
-		// JPanel whitestats = new JPanel(new GridLayout(3, 3));
-		// JPanel blackstats = new JPanel(new GridLayout(3, 3));
-		// wcombo = new JComboBox<String>(WNames);
-		// bcombo = new JComboBox<String>(BNames);
-		// wscroll = new JScrollPane(wcombo);
-		// bscroll = new JScrollPane(bcombo);
-		// wcombopanel.setLayout(new FlowLayout());
-		// bcombopanel.setLayout(new FlowLayout());
-
-		// wselect = new Button("Select");
-		// bselect = new Button("Select");
-		 controlPanel.wselect.addActionListener(new SelectHandler(0));
-		 controlPanel.bselect.addActionListener(new SelectHandler(1));
-
-		// WNewPlayer = new Button("New Player");
-		// BNewPlayer = new Button("New Player");
 		controlPanel.WNewPlayer.addActionListener(new Handler(0));
 		controlPanel.BNewPlayer.addActionListener(new Handler(1));
 
-		// wcombopanel.add(wscroll);
-		// wcombopanel.add(wselect);
-		// wcombopanel.add(WNewPlayer);
-		// bcombopanel.add(bscroll);
-		// bcombopanel.add(bselect);
-		// bcombopanel.add(BNewPlayer);
-		// WhitePlayer.add(wcombopanel, BorderLayout.NORTH);
-		// BlackPlayer.add(bcombopanel, BorderLayout.NORTH);
-		// whitestats.add(new JLabel("Name   :"));
-		// whitestats.add(new JLabel("Played :"));
-		// whitestats.add(new JLabel("Won    :"));
-		// blackstats.add(new JLabel("Name   :"));
-		// blackstats.add(new JLabel("Played :"));
-		// blackstats.add(new JLabel("Won    :"));
-		// WhitePlayer.add(whitestats, BorderLayout.WEST);
-		// BlackPlayer.add(blackstats, BorderLayout.WEST);
-		// controlPanel.add(WhitePlayer);
-		// controlPanel.add(BlackPlayer);
 		// new
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -203,28 +95,7 @@ public class Controller extends JFrame implements MouseListener {
 			}
 		}
 		refleshCells();
-		//
-		// // the panel of game setting
-		// showPlayer = new JPanel(new FlowLayout());
-		// showPlayer.add(timeSlider);
-
-		// JLabel setTimeLabel = new JLabel("Set Timer(in mins):");
-		// // the start_button
-		// startButton = new Button("Start");
-		// startButton.setBackground(Color.black);
-		// startButton.setForeground(Color.white);
 		controlPanel.startButton.addActionListener(new START());
-		// startButton.setPreferredSize(new Dimension(120, 40));
-		// setTimeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		// label = new JLabel("Time Starts now", JLabel.CENTER);
-		// label.setFont(new Font("SERIF", Font.BOLD, 30));
-		// displayTime = new JPanel(new FlowLayout());
-		// time = new JPanel(new GridLayout(3, 3));
-		// time.add(setTimeLabel);
-		// time.add(showPlayer);
-		// displayTime.add(startButton);
-		// time.add(displayTime);
-		// controlPanel.add(time);
 		board.setMinimumSize(new Dimension(800, 700));
 
 		// The Left Layout When Game is inactive
@@ -249,6 +120,87 @@ public class Controller extends JFrame implements MouseListener {
 		controlPanel.getX();
 		content.add(split);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+		// put picture on the cells
+	public void refleshCells() {
+		Piece board[][] = chessGame.getboard().board;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				boardView.board_block[i][j].setPiece(board[i][j]);
+			}
+		}
+	}
+
+	@Override
+	public void mouseClicked(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		Cell cell = (Cell) e.getSource();
+		System.out.println(String.valueOf(cell.x) + String.valueOf(cell.y));
+		// Board board = chessGame.getboard();
+		Piece board[][] = chessGame.getboard().board;
+		// no selected
+		if (selectedCell == null) {
+			if (board[cell.x][cell.y] == null) {
+				return;
+			} else {
+				if (board[cell.x][cell.y].getcolor() == chance) {
+					cell.select();
+					//get the valid position it can go
+					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x,cell.y));
+					//mark the valid position
+					for(int i=0;i<validCoordinates.length;i++){
+						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].setpossibledestination();
+					}
+					selectedCell = cell;
+				} else {
+					return;
+				}
+			}
+		//selected a chess
+		} else {
+			//remove the valid position color
+			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x,selectedCell.y));
+			for(int i=0;i<validCoordinates.length;i++){
+				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].removepossibledestination();
+			}
+			// try to move the chess
+			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
+				chance = chance & 0x0001;
+				selectedCell.deselect();
+				selectedCell = null;
+				refleshCells();
+
+			} else {
+				selectedCell.deselect();
+				selectedCell = null;
+				return;
+			}
+		}
+
+	}
+
+	@Override
+	public void mousePressed(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 	// A function to clean the highlights of possible destination cells
@@ -424,88 +376,6 @@ public class Controller extends JFrame implements MouseListener {
 			j.add(det);
 			controlPanel.selected = true;
 		}
-	}
-
-	// put picture on the cells
-	public void refleshCells() {
-		Piece board[][] = chessGame.getboard().board;
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				boardView.board_block[i][j].setPiece(board[i][j]);
-			}
-		}
-	}
-
-	@Override
-	public void mouseClicked(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		Cell cell = (Cell) e.getSource();
-		System.out.println(String.valueOf(cell.x) + String.valueOf(cell.y));
-		// Board board = chessGame.getboard();
-		Piece board[][] = chessGame.getboard().board;
-		// no selected
-		if (selectedCell == null) {
-			if (board[cell.x][cell.y] == null) {
-				return;
-			} else {
-				if (board[cell.x][cell.y].getcolor() == chance) {
-					cell.select();
-					//get the valid position it can go
-					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x,cell.y));
-					//mark the valid position
-					for(int i=0;i<validCoordinates.length;i++){
-						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].setpossibledestination();
-					}
-					selectedCell = cell;
-				} else {
-					return;
-				}
-			}
-		//selected a chess
-		} else {
-			//remove the valid position color
-			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x,selectedCell.y));
-			for(int i=0;i<validCoordinates.length;i++){
-				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].removepossibledestination();
-			}
-			// try to move the chess
-			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
-				chance = chance & 0x0001;
-				selectedCell.deselect();
-				selectedCell = null;
-				refleshCells();
-
-			} else {
-				selectedCell.deselect();
-				selectedCell = null;
-				return;
-			}
-		}
-
-	}
-
-	@Override
-	public void mousePressed(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	// TODO: move to ChessGame
