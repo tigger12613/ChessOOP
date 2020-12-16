@@ -71,7 +71,8 @@ public class Controller extends JFrame implements MouseListener {
 	public static int timeRemaining = 60;
 
 	//new
-	private Cell board_block[][] = new Cell[8][8];
+	//private Cell board_block[][] = new Cell[8][8];
+	private BoardView boardView = new BoardView();
 
 	private Cell selectedCell ;
 
@@ -185,10 +186,8 @@ public class Controller extends JFrame implements MouseListener {
 		//new
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
-				Cell cell = new Cell(i, j);
-				board.add(cell);
-				board_block[i][j] = cell;
-				board_block[i][j].addMouseListener(this);
+				board.add(boardView.board_block[i][j]);
+				boardView.board_block[i][j].addMouseListener(this);
 			}
 		}
 		refleshCells();
@@ -420,7 +419,7 @@ public class Controller extends JFrame implements MouseListener {
 		Piece board[][] = chessGame.getboard().board;
 		for(int i=0 ; i<8 ; i++){
 			for(int j=0 ; j<8 ; j++){
-				board_block[i][j].setPiece(board[i][j]);
+				boardView.board_block[i][j].setPiece(board[i][j]);
 			}
 		}
 	}
