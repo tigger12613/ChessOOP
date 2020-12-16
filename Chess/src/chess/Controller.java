@@ -71,7 +71,7 @@ public class Controller extends JFrame implements MouseListener {
 	private String[] WNames = {}, BNames = {};
 	private JSlider timeSlider;
 	private BufferedImage image;
-	private Button start, wselect, bselect, WNewPlayer, BNewPlayer;
+	private Button startButton, wselect, bselect, WNewPlayer, BNewPlayer;
 	public static int timeRemaining = 60;
 
 	//new
@@ -83,7 +83,8 @@ public class Controller extends JFrame implements MouseListener {
 		//chessGame = new ChessGame();
 
 		timeRemaining = 60;
-		timeSlider = new JSlider();
+		timeSlider = new TimeSlider();
+		timeSlider.addChangeListener(new TimeChange());
 		move = "White";
 		wname = null;
 		bname = null;
@@ -99,14 +100,14 @@ public class Controller extends JFrame implements MouseListener {
 		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
 		this.setIconImage(img.getImage());
 
-		// Time Slider Details
-		timeSlider.setMinimum(1);
-		timeSlider.setMaximum(15);
-		timeSlider.setValue(1);
-		timeSlider.setMajorTickSpacing(2);
-		timeSlider.setPaintLabels(true);
-		timeSlider.setPaintTicks(true);
-		timeSlider.addChangeListener(new TimeChange());
+		// // Time Slider Details
+		// timeSlider.setMinimum(1);
+		// timeSlider.setMaximum(15);
+		// timeSlider.setValue(1);
+		// timeSlider.setMajorTickSpacing(2);
+		// timeSlider.setPaintLabels(true);
+		// timeSlider.setPaintTicks(true);
+		// timeSlider.addChangeListener(new TimeChange());
 
 		// Fetching Details of all Players
 		wplayer = Player.fetch_players();
@@ -153,14 +154,17 @@ public class Controller extends JFrame implements MouseListener {
 		bscroll = new JScrollPane(bcombo);
 		wcombopanel.setLayout(new FlowLayout());
 		bcombopanel.setLayout(new FlowLayout());
+
 		wselect = new Button("Select");
 		bselect = new Button("Select");
 		wselect.addActionListener(new SelectHandler(0));
 		bselect.addActionListener(new SelectHandler(1));
+
 		WNewPlayer = new Button("New Player");
 		BNewPlayer = new Button("New Player");
 		WNewPlayer.addActionListener(new Handler(0));
 		BNewPlayer.addActionListener(new Handler(1));
+
 		wcombopanel.add(wscroll);
 		wcombopanel.add(wselect);
 		wcombopanel.add(WNewPlayer);
@@ -197,23 +201,25 @@ public class Controller extends JFrame implements MouseListener {
 			}
 		}
 		//
-
+		// the panel of game setting
 		showPlayer = new JPanel(new FlowLayout());
 		showPlayer.add(timeSlider);
-		JLabel setTime = new JLabel("Set Timer(in mins):");
-		start = new Button("Start");
-		start.setBackground(Color.black);
-		start.setForeground(Color.white);
-		start.addActionListener(new START());
-		start.setPreferredSize(new Dimension(120, 40));
-		setTime.setFont(new Font("Arial", Font.BOLD, 16));
+		
+		JLabel setTimeLabel = new JLabel("Set Timer(in mins):");
+		//the start_button
+		startButton = new Button("Start");
+		startButton.setBackground(Color.black);
+		startButton.setForeground(Color.white);
+		startButton.addActionListener(new START());
+		startButton.setPreferredSize(new Dimension(120, 40));
+		setTimeLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		label = new JLabel("Time Starts now", JLabel.CENTER);
 		label.setFont(new Font("SERIF", Font.BOLD, 30));
 		displayTime = new JPanel(new FlowLayout());
 		time = new JPanel(new GridLayout(3, 3));
-		time.add(setTime);
+		time.add(setTimeLabel);
 		time.add(showPlayer);
-		displayTime.add(start);
+		displayTime.add(startButton);
 		time.add(displayTime);
 		controlPanel.add(time);
 		board.setMinimumSize(new Dimension(800, 700));
@@ -240,7 +246,7 @@ public class Controller extends JFrame implements MouseListener {
 
 		content.add(split);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}	
+	}
 
 	// A function to clean the highlights of possible destination cells
 	private void cleandestinations(ArrayList<Cell> destlist) // Function to clear the last move's destinations
@@ -278,8 +284,10 @@ public class Controller extends JFrame implements MouseListener {
 			BNewPlayer.disable();
 			wselect.disable();
 			bselect.disable();
+
 			split.remove(temp);
 			split.add(board);
+
 			showPlayer.remove(timeSlider);
 			mov = new JLabel("Move:");
 			mov.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
@@ -289,7 +297,7 @@ public class Controller extends JFrame implements MouseListener {
 			CHNC.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 			CHNC.setForeground(Color.blue);
 			showPlayer.add(CHNC);
-			displayTime.remove(start);
+			displayTime.remove(startButton);
 			displayTime.add(label);
 			timer = new Time(label);
 			timer.start();
@@ -365,7 +373,8 @@ public class Controller extends JFrame implements MouseListener {
 		}
 
 	}
-
+	
+	// add new player
 	class Handler implements ActionListener {
 		private int color;
 
@@ -378,13 +387,13 @@ public class Controller extends JFrame implements MouseListener {
 			// TODO Auto-generated method stub
 			String n = (color == 0) ? wname : bname;
 			JPanel j = (color == 0) ? WhitePlayer : BlackPlayer;
-			ArrayList<Player> N = Player.fetch_players();
-			Iterator<Player> it = N.iterator();
+			ArrayList<Player> Players = Player.fetch_players();
+			Iterator<Player> it = Players.iterator();
 			JPanel det = (color == 0) ? wdetails : bdetails;
 			n = JOptionPane.showInputDialog(j, "Enter your name");
 
 			if (n != null) {
-
+				// check whether the player is exist
 				while (it.hasNext()) {
 					if (it.next().name().equals(n)) {
 						JOptionPane.showMessageDialog(j, "Player exists");
@@ -461,7 +470,7 @@ public class Controller extends JFrame implements MouseListener {
 	// 	chance ^= 1;
 	// 	if (!end && timer != null) {
 	// 		timer.reset();
-	// 		timer.start();
+	// 		timer.start_button();
 	// 		showPlayer.remove(CHNC);
 	// 		if (this.move == "White")
     //             this.move = "Black";
@@ -530,7 +539,7 @@ public class Controller extends JFrame implements MouseListener {
 	// 	BlackPlayer.remove(bdetails);
 	// 	displayTime.remove(label);
 
-	// 	displayTime.add(start);
+	// 	displayTime.add(start_button);
 	// 	showPlayer.remove(mov);
 	// 	showPlayer.remove(CHNC);
 	// 	showPlayer.revalidate();
@@ -607,7 +616,7 @@ public class Controller extends JFrame implements MouseListener {
 	// 				changechance();
 	// 				if (!end) {
 	// 					timer.reset();
-	// 					timer.start();
+	// 					timer.start_button();
 	// 				}
 	// 			}
 	// 			if (previous != null) {
