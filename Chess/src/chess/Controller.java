@@ -36,11 +36,11 @@ public class Controller extends JFrame implements MouseListener {
 	// Variable Declaration
 	private static final int Height = 700;
 	private static final int Width = 1110;
-	private  ChessGame chessGame;
+	private ChessGame chessGame;
 	private Cell c, previous;
 	// who can go, 0 is white, 1 is black
 	private int chance = 0;
-	//private Cell boardState[][];
+	// private Cell boardState[][];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 	private JPanel board = new JPanel(new GridLayout(8, 8));
@@ -53,7 +53,7 @@ public class Controller extends JFrame implements MouseListener {
 	private JLabel label, mov;
 	private static JLabel CHNC;
 	private Time timer;
-	
+
 	private boolean selected = false, end = false;
 	private Container content;
 	private ArrayList<Player> wplayer, bplayer;
@@ -70,11 +70,11 @@ public class Controller extends JFrame implements MouseListener {
 	private Button startButton, wselect, bselect, WNewPlayer, BNewPlayer;
 	public static int timeRemaining = 60;
 
-	//new
-	//private Cell board_block[][] = new Cell[8][8];
+	// new
+	// private Cell board_block[][] = new Cell[8][8];
 	private BoardView boardView = new BoardView();
 
-	private Cell selectedCell ;
+	private Cell selectedCell;
 
 	// Constructor
 	Controller() {
@@ -122,9 +122,9 @@ public class Controller extends JFrame implements MouseListener {
 		WNames = Wnames.toArray(WNames);
 		BNames = Bnames.toArray(BNames);
 
-		//Cell cell;
+		// Cell cell;
 		board.setBorder(BorderFactory.createLoweredBevelBorder());
-		//pieces.Piece P;
+		// pieces.Piece P;
 		content = getContentPane();
 		setSize(Width, Height);
 		setTitle("Chess");
@@ -183,9 +183,9 @@ public class Controller extends JFrame implements MouseListener {
 		BlackPlayer.add(blackstats, BorderLayout.WEST);
 		controlPanel.add(WhitePlayer);
 		controlPanel.add(BlackPlayer);
-		//new
-		for(int i=0;i<8;i++){
-			for(int j=0;j<8;j++){
+		// new
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				board.add(boardView.board_block[i][j]);
 				boardView.board_block[i][j].addMouseListener(this);
 			}
@@ -195,9 +195,9 @@ public class Controller extends JFrame implements MouseListener {
 		// the panel of game setting
 		showPlayer = new JPanel(new FlowLayout());
 		showPlayer.add(timeSlider);
-		
+
 		JLabel setTimeLabel = new JLabel("Set Timer(in mins):");
-		//the start_button
+		// the start_button
 		startButton = new Button("Start");
 		startButton.setBackground(Color.black);
 		startButton.setForeground(Color.white);
@@ -364,7 +364,7 @@ public class Controller extends JFrame implements MouseListener {
 		}
 
 	}
-	
+
 	// add new player
 	class Handler implements ActionListener {
 		private int color;
@@ -415,49 +415,55 @@ public class Controller extends JFrame implements MouseListener {
 	}
 
 	// put picture on the cells
-	public void refleshCells(){
+	public void refleshCells() {
 		Piece board[][] = chessGame.getboard().board;
-		for(int i=0 ; i<8 ; i++){
-			for(int j=0 ; j<8 ; j++){
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				boardView.board_block[i][j].setPiece(board[i][j]);
 			}
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
 		Cell cell = (Cell) e.getSource();
-		System.out.println(String.valueOf(cell.x)+String.valueOf(cell.y));
-		//Board board = chessGame.getboard();
+		System.out.println(String.valueOf(cell.x) + String.valueOf(cell.y));
+		// Board board = chessGame.getboard();
 		Piece board[][] = chessGame.getboard().board;
-		if(selectedCell==null){
-			if(board[cell.x][cell.y]==null){
+		// no selected
+		if (selectedCell == null) {
+			if (board[cell.x][cell.y] == null) {
 				return;
-			}else{
-				if(board[cell.x][cell.y].getcolor()==chance){
+			} else {
+				if (board[cell.x][cell.y].getcolor() == chance) {
 					cell.select();
+					//get the valid position it can go
+					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x,cell.y));
+					//mark the valid position
+					for(int i=0;i<validCoordinates.length;i++){
+						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].setpossibledestination();
+					}
 					selectedCell = cell;
-				}else{
+				} else {
 					return;
 				}
 			}
-		}else{
-			if(chessGame.move(new Coordinate(selectedCell.x,selectedCell.y), new Coordinate(cell.x,cell.y))){
+		//selected a chess
+		} else {
+			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
 				chance = chance & 0x0001;
 				selectedCell.deselect();
 				selectedCell = null;
 				refleshCells();
-			}else{
-				if(board[cell.x][cell.y]==null){
-					selectedCell.deselect();
-					selectedCell = null;
-				}
+				
+			} else {
+				selectedCell.deselect();
+				selectedCell = null;
 				return;
 			}
 		}
-		
-		
+
 	}
 
 	@Override
@@ -483,111 +489,112 @@ public class Controller extends JFrame implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	//TODO: move to ChessGame
+
+	// TODO: move to ChessGame
 	// A function to change the chance from White Player to Black Player or vice
 	// verse
 	// It is made public because it is to be accessed in the Time Class
 	// public void changechance() {
-	// 	if (chessGame.ischeck(chance)) {
-	// 		chance ^= 1;
-	// 		gameend();
-	// 	}
-	// 	if (destinationlist.isEmpty() == false)
-	// 		cleandestinations(destinationlist);
-	// 	if (previous != null)
-	// 		previous.deselect();
-	// 	previous = null;
-	// 	chance ^= 1;
-	// 	if (!end && timer != null) {
-	// 		timer.reset();
-	// 		timer.start_button();
-	// 		showPlayer.remove(CHNC);
-	// 		if (this.move == "White")
-    //             this.move = "Black";
-	// 		else
-    //             this.move = "White";
-	// 		CHNC.setText(this.move);
-	// 		showPlayer.add(CHNC);
-	// 	}
+	// if (chessGame.ischeck(chance)) {
+	// chance ^= 1;
+	// gameend();
+	// }
+	// if (destinationlist.isEmpty() == false)
+	// cleandestinations(destinationlist);
+	// if (previous != null)
+	// previous.deselect();
+	// previous = null;
+	// chance ^= 1;
+	// if (!end && timer != null) {
+	// timer.reset();
+	// timer.start_button();
+	// showPlayer.remove(CHNC);
+	// if (this.move == "White")
+	// this.move = "Black";
+	// else
+	// this.move = "White";
+	// CHNC.setText(this.move);
+	// showPlayer.add(CHNC);
+	// }
 	// }
 
-
-	//TODO: move to ChessGame
+	// TODO: move to ChessGame
 	// A function to eliminate the possible moves that will put the King in danger
-	// private ArrayList<Cell> filterdestination(ArrayList<Cell> destlist, Cell fromcell) {
-	// 	ArrayList<Cell> newlist = new ArrayList<Cell>();
-	// 	Cell newboardstate[][] = new Cell[8][8];
-	// 	ListIterator<Cell> it = destlist.listIterator();
-	// 	int x, y;
-	// 	while (it.hasNext()) {
-	// 		for (int i = 0; i < 8; i++)
-	// 			for (int j = 0; j < 8; j++) {
-	// 				try {
-	// 					newboardstate[i][j] = new Cell(chessGame.boardState[i][j]);
-	// 				} catch (CloneNotSupportedException e) {
-	// 					e.printStackTrace();
-	// 				}
-	// 			}
+	// private ArrayList<Cell> filterdestination(ArrayList<Cell> destlist, Cell
+	// fromcell) {
+	// ArrayList<Cell> newlist = new ArrayList<Cell>();
+	// Cell newboardstate[][] = new Cell[8][8];
+	// ListIterator<Cell> it = destlist.listIterator();
+	// int x, y;
+	// while (it.hasNext()) {
+	// for (int i = 0; i < 8; i++)
+	// for (int j = 0; j < 8; j++) {
+	// try {
+	// newboardstate[i][j] = new Cell(chessGame.boardState[i][j]);
+	// } catch (CloneNotSupportedException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
-	// 		Cell tempc = it.next();
-	// 		if (newboardstate[tempc.x][tempc.y].getpiece() != null)
-	// 			newboardstate[tempc.x][tempc.y].removePiece();
-	// 		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-	// 		x = chessGame.getKing(chance).getx();
-	// 		y = chessGame.getKing(chance).gety();
-	// 		if (newboardstate[fromcell.x][fromcell.y].getpiece() instanceof King) {
-	// 			((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-	// 			((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-	// 			x = tempc.x;
-	// 			y = tempc.y;
-	// 		}
-	// 		newboardstate[fromcell.x][fromcell.y].removePiece();
-	// 		if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) == false))
-	// 			newlist.add(tempc);
-	// 	}
-	// 	return newlist;
+	// Cell tempc = it.next();
+	// if (newboardstate[tempc.x][tempc.y].getpiece() != null)
+	// newboardstate[tempc.x][tempc.y].removePiece();
+	// newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+	// x = chessGame.getKing(chance).getx();
+	// y = chessGame.getKing(chance).gety();
+	// if (newboardstate[fromcell.x][fromcell.y].getpiece() instanceof King) {
+	// ((King) (newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
+	// ((King) (newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
+	// x = tempc.x;
+	// y = tempc.y;
+	// }
+	// newboardstate[fromcell.x][fromcell.y].removePiece();
+	// if ((((King) (newboardstate[x][y].getpiece())).isindanger(newboardstate) ==
+	// false))
+	// newlist.add(tempc);
+	// }
+	// return newlist;
 	// }
 
 	// @SuppressWarnings("deprecation")
 	// private void gameend() {
-	// 	cleandestinations(destinationlist);
-	// 	displayTime.disable();
-	// 	timer.countdownTimer.stop();
-	// 	if (previous != null)
-	// 		previous.removePiece();
-	// 	if (chance == 0) {
-	// 		White.updateGamesWon();
-	// 		White.Update_Player();
-	// 		winner = White.name();
-	// 	} else {
-	// 		Black.updateGamesWon();
-	// 		Black.Update_Player();
-	// 		winner = Black.name();
-	// 	}
-	// 	JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
-	// 	WhitePlayer.remove(wdetails);
-	// 	BlackPlayer.remove(bdetails);
-	// 	displayTime.remove(label);
+	// cleandestinations(destinationlist);
+	// displayTime.disable();
+	// timer.countdownTimer.stop();
+	// if (previous != null)
+	// previous.removePiece();
+	// if (chance == 0) {
+	// White.updateGamesWon();
+	// White.Update_Player();
+	// winner = White.name();
+	// } else {
+	// Black.updateGamesWon();
+	// Black.Update_Player();
+	// winner = Black.name();
+	// }
+	// JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
+	// WhitePlayer.remove(wdetails);
+	// BlackPlayer.remove(bdetails);
+	// displayTime.remove(label);
 
-	// 	displayTime.add(start_button);
-	// 	showPlayer.remove(mov);
-	// 	showPlayer.remove(CHNC);
-	// 	showPlayer.revalidate();
-	// 	showPlayer.add(timeSlider);
+	// displayTime.add(start_button);
+	// showPlayer.remove(mov);
+	// showPlayer.remove(CHNC);
+	// showPlayer.revalidate();
+	// showPlayer.add(timeSlider);
 
-	// 	split.remove(board);
-	// 	split.add(temp);
-	// 	WNewPlayer.enable();
-	// 	BNewPlayer.enable();
-	// 	wselect.enable();
-	// 	bselect.enable();
-	// 	end = true;
-	// 	this.disable();
-	// 	this.dispose();
-	// 	// Mainboard = new Controller();
-	// 	// Mainboard.setVisible(true);
-	// 	// Mainboard.setResizable(false);
+	// split.remove(board);
+	// split.add(temp);
+	// WNewPlayer.enable();
+	// BNewPlayer.enable();
+	// wselect.enable();
+	// bselect.enable();
+	// end = true;
+	// this.disable();
+	// this.dispose();
+	// // Mainboard = new Controller();
+	// // Mainboard.setVisible(true);
+	// // Mainboard.setResizable(false);
 	// }
 
 	// These are the abstract function of the parent class. Only relevant method
@@ -595,88 +602,93 @@ public class Controller extends JFrame implements MouseListener {
 	// which is called when the user clicks on a particular cell
 	// @Override
 	// public void mouseClicked(MouseEvent arg0) {
-	// 	// TODO Auto-generated method stub
-	// 	c = (Cell) arg0.getSource();
-	// 	if (previous == null) {
-	// 		if (c.getpiece() != null) {
-	// 			if (c.getpiece().getcolor() != chance)
-	// 				return;
-	// 			c.select();
-	// 			previous = c;
-	// 			destinationlist.clear();
-	// 			destinationlist = c.getpiece().move(chessGame.boardState, c.x, c.y);
-	// 			if (c.getpiece() instanceof King)
-	// 				destinationlist = filterdestination(destinationlist, c);
-	// 			else {
-	// 				if (chessGame.ischeck(chance))
-	// 					destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
-	// 				else if (destinationlist.isEmpty() == false && chessGame.willkingbeindanger(c, destinationlist.get(0),chance))
-	// 					destinationlist.clear();
-	// 			}
-	// 			highlightdestinations(destinationlist);
-	// 		}
-	// 	} else {
-	// 		if (c.x == previous.x && c.y == previous.y) {
-	// 			c.deselect();
-	// 			cleandestinations(destinationlist);
-	// 			destinationlist.clear();
-	// 			previous = null;
-	// 		} else if (c.getpiece() == null || previous.getpiece().getcolor() != c.getpiece().getcolor()) {
-	// 			if (c.ispossibledestination()) {
-	// 				if (c.getpiece() != null)
-	// 					c.removePiece();
-	// 				c.setPiece(previous.getpiece());
-	// 				if (previous.ischeck())
-	// 					previous.removecheck();
-	// 				previous.removePiece();
-	// 				if (chessGame.getKing(chance ^ 1).isindanger(chessGame.boardState)) {
-	// 					chessGame.boardState[chessGame.getKing(chance ^ 1).getx()][chessGame.getKing(chance ^ 1).gety()].setcheck();
-	// 					if (chessGame.checkmate(chessGame.getKing(chance ^ 1).getcolor())) {
-	// 						previous.deselect();
-	// 						if (previous.getpiece() != null)
-	// 							previous.removePiece();
-	// 						gameend();
-	// 					}
-	// 				}
-	// 				if (chessGame.getKing(chance).isindanger(chessGame.boardState) == false)
-	// 					chessGame.boardState[chessGame.getKing(chance).getx()][chessGame.getKing(chance).gety()].removecheck();
-	// 				if (c.getpiece() instanceof King) {
-	// 					((King) c.getpiece()).setx(c.x);
-	// 					((King) c.getpiece()).sety(c.y);
-	// 				}
-	// 				changechance();
-	// 				if (!end) {
-	// 					timer.reset();
-	// 					timer.start_button();
-	// 				}
-	// 			}
-	// 			if (previous != null) {
-	// 				previous.deselect();
-	// 				previous = null;
-	// 			}
-	// 			cleandestinations(destinationlist);
-	// 			destinationlist.clear();
-	// 		} else if (previous.getpiece().getcolor() == c.getpiece().getcolor()) {
-	// 			previous.deselect();
-	// 			cleandestinations(destinationlist);
-	// 			destinationlist.clear();
-	// 			c.select();
-	// 			previous = c;
-	// 			destinationlist = c.getpiece().move(chessGame.boardState, c.x, c.y);
-	// 			if (c.getpiece() instanceof King)
-	// 				destinationlist = filterdestination(destinationlist, c);
-	// 			else {
-	// 				if (chessGame.boardState[chessGame.getKing(chance).getx()][chessGame.getKing(chance).gety()].ischeck())
-	// 					destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
-	// 				else if (destinationlist.isEmpty() == false && chessGame.willkingbeindanger(c, destinationlist.get(0),chance))
-	// 					destinationlist.clear();
-	// 			}
-	// 			highlightdestinations(destinationlist);
-	// 		}
-	// 	}
-	// 	if (c.getpiece() != null && c.getpiece() instanceof King) {
-	// 		((King) c.getpiece()).setx(c.x);
-	// 		((King) c.getpiece()).sety(c.y);
-	// 	}
+	// // TODO Auto-generated method stub
+	// c = (Cell) arg0.getSource();
+	// if (previous == null) {
+	// if (c.getpiece() != null) {
+	// if (c.getpiece().getcolor() != chance)
+	// return;
+	// c.select();
+	// previous = c;
+	// destinationlist.clear();
+	// destinationlist = c.getpiece().move(chessGame.boardState, c.x, c.y);
+	// if (c.getpiece() instanceof King)
+	// destinationlist = filterdestination(destinationlist, c);
+	// else {
+	// if (chessGame.ischeck(chance))
+	// destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
+	// else if (destinationlist.isEmpty() == false &&
+	// chessGame.willkingbeindanger(c, destinationlist.get(0),chance))
+	// destinationlist.clear();
+	// }
+	// highlightdestinations(destinationlist);
+	// }
+	// } else {
+	// if (c.x == previous.x && c.y == previous.y) {
+	// c.deselect();
+	// cleandestinations(destinationlist);
+	// destinationlist.clear();
+	// previous = null;
+	// } else if (c.getpiece() == null || previous.getpiece().getcolor() !=
+	// c.getpiece().getcolor()) {
+	// if (c.ispossibledestination()) {
+	// if (c.getpiece() != null)
+	// c.removePiece();
+	// c.setPiece(previous.getpiece());
+	// if (previous.ischeck())
+	// previous.removecheck();
+	// previous.removePiece();
+	// if (chessGame.getKing(chance ^ 1).isindanger(chessGame.boardState)) {
+	// chessGame.boardState[chessGame.getKing(chance ^
+	// 1).getx()][chessGame.getKing(chance ^ 1).gety()].setcheck();
+	// if (chessGame.checkmate(chessGame.getKing(chance ^ 1).getcolor())) {
+	// previous.deselect();
+	// if (previous.getpiece() != null)
+	// previous.removePiece();
+	// gameend();
+	// }
+	// }
+	// if (chessGame.getKing(chance).isindanger(chessGame.boardState) == false)
+	// chessGame.boardState[chessGame.getKing(chance).getx()][chessGame.getKing(chance).gety()].removecheck();
+	// if (c.getpiece() instanceof King) {
+	// ((King) c.getpiece()).setx(c.x);
+	// ((King) c.getpiece()).sety(c.y);
+	// }
+	// changechance();
+	// if (!end) {
+	// timer.reset();
+	// timer.start_button();
+	// }
+	// }
+	// if (previous != null) {
+	// previous.deselect();
+	// previous = null;
+	// }
+	// cleandestinations(destinationlist);
+	// destinationlist.clear();
+	// } else if (previous.getpiece().getcolor() == c.getpiece().getcolor()) {
+	// previous.deselect();
+	// cleandestinations(destinationlist);
+	// destinationlist.clear();
+	// c.select();
+	// previous = c;
+	// destinationlist = c.getpiece().move(chessGame.boardState, c.x, c.y);
+	// if (c.getpiece() instanceof King)
+	// destinationlist = filterdestination(destinationlist, c);
+	// else {
+	// if
+	// (chessGame.boardState[chessGame.getKing(chance).getx()][chessGame.getKing(chance).gety()].ischeck())
+	// destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
+	// else if (destinationlist.isEmpty() == false &&
+	// chessGame.willkingbeindanger(c, destinationlist.get(0),chance))
+	// destinationlist.clear();
+	// }
+	// highlightdestinations(destinationlist);
+	// }
+	// }
+	// if (c.getpiece() != null && c.getpiece() instanceof King) {
+	// ((King) c.getpiece()).setx(c.x);
+	// ((King) c.getpiece()).sety(c.y);
+	// }
 	// }
 }

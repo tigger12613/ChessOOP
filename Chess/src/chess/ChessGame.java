@@ -142,7 +142,7 @@ public class ChessGame {
     // //startGame;
     // public startGame();
     // //select a coordinate and return the valid cordinates the chess can move
-    // public Coordinate[] validCoordinates(Coordinate coordinate);
+    public Coordinate[] validCoordinates(Coordinate coordinate);
     // //get the full board;
     public Board getboard(){
 		return new Board();
