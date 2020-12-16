@@ -451,12 +451,18 @@ public class Controller extends JFrame implements MouseListener {
 			}
 		//selected a chess
 		} else {
+			//remove the valid position color
+			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x,selectedCell.y));
+			for(int i=0;i<validCoordinates.length;i++){
+				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].removepossibledestination();
+			}
+			// try to move the chess
 			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
 				chance = chance & 0x0001;
 				selectedCell.deselect();
 				selectedCell = null;
 				refleshCells();
-				
+
 			} else {
 				selectedCell.deselect();
 				selectedCell = null;
