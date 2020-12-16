@@ -37,7 +37,7 @@ public class Controller extends JFrame implements MouseListener {
 	private static final int Height = 700;
 	private static final int Width = 1110;
 	private ChessGame chessGame;
-	//private Cell c, previous;
+	// private Cell c, previous;
 	// who can go, 0 is white, 1 is black
 	private int chance = 0;
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
@@ -52,6 +52,7 @@ public class Controller extends JFrame implements MouseListener {
 	private BufferedImage image;
 	public static int timeRemaining = 60;
 
+	public String wname = null, bname = null, winner = null;
 	// new
 	private BoardView boardView = new BoardView();
 	private Cell selectedCell;
@@ -78,8 +79,7 @@ public class Controller extends JFrame implements MouseListener {
 		setTitle("Chess");
 
 		content.setBackground(Color.black);
-		
-		
+
 		content.setLayout(new BorderLayout());
 		controlPanel.wselect.addActionListener(new SelectHandler(0));
 		controlPanel.bselect.addActionListener(new SelectHandler(1));
@@ -121,7 +121,8 @@ public class Controller extends JFrame implements MouseListener {
 		content.add(split);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-		// put picture on the cells
+
+	// put picture on the cells
 	public void refleshCells() {
 		Piece board[][] = chessGame.getboard().board;
 		for (int i = 0; i < 8; i++) {
@@ -129,6 +130,48 @@ public class Controller extends JFrame implements MouseListener {
 				boardView.board_block[i][j].setPiece(board[i][j]);
 			}
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void gameEnd() {
+		String winner;
+		cleandestinations(destinationlist);
+		controlPanel.displayTime.disable();
+		controlPanel.timer.countdownTimer.stop();
+		// if (previous != null)
+		// 	previous.removePiece();
+		if (chance == 0) {
+			White.updateGamesWon();
+			White.Update_Player();
+			winner = White.name();
+		} else {
+			Black.updateGamesWon();
+			Black.Update_Player();
+			winner = Black.name();
+		}
+		JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
+		controlPanel.WhitePlayer.remove(controlPanel.wdetails);
+		controlPanel.BlackPlayer.remove(controlPanel.bdetails);
+		controlPanel.displayTime.remove(controlPanel.label);
+
+		controlPanel.displayTime.add(controlPanel.startButton);
+		controlPanel.showPlayer.remove(controlPanel.mov);
+		controlPanel.showPlayer.remove(controlPanel.CHNC);
+		controlPanel.showPlayer.revalidate();
+		controlPanel.showPlayer.add(controlPanel.timeSlider);
+
+		split.remove(board);
+		split.add(temp);
+		controlPanel.WNewPlayer.enable();
+		controlPanel.BNewPlayer.enable();
+		controlPanel.wselect.enable();
+		controlPanel.bselect.enable();
+		controlPanel.end = true;
+		this.disable();
+		this.dispose();
+		// Mainboard = new Controller();
+		// Mainboard.setVisible(true);
+		// Mainboard.setResizable(false);
 	}
 
 	@Override
@@ -145,30 +188,36 @@ public class Controller extends JFrame implements MouseListener {
 			} else {
 				if (board[cell.x][cell.y].getcolor() == chance) {
 					cell.select();
-					//get the valid position it can go
-					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x,cell.y));
-					//mark the valid position
-					for(int i=0;i<validCoordinates.length;i++){
-						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].setpossibledestination();
+					// get the valid position it can go
+					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x, cell.y));
+					// mark the valid position
+					for (int i = 0; i < validCoordinates.length; i++) {
+						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()]
+								.setpossibledestination();
 					}
 					selectedCell = cell;
 				} else {
 					return;
 				}
 			}
-		//selected a chess
+			// selected a chess
 		} else {
-			//remove the valid position color
-			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x,selectedCell.y));
-			for(int i=0;i<validCoordinates.length;i++){
-				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()].removepossibledestination();
+			// remove the valid position color
+			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x, selectedCell.y));
+			for (int i = 0; i < validCoordinates.length; i++) {
+				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()]
+						.removepossibledestination();
 			}
 			// try to move the chess
 			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
-				chance = chance & 0x0001;
+				// if(chessGame.checkmate(chance & 1)){
+				// 	gameEnd();
+				// }
 				selectedCell.deselect();
 				selectedCell = null;
 				refleshCells();
+
+				chance = chance & 1;
 
 			} else {
 				selectedCell.deselect();
@@ -239,7 +288,7 @@ public class Controller extends JFrame implements MouseListener {
 			controlPanel.BNewPlayer.disable();
 			controlPanel.wselect.disable();
 			controlPanel.bselect.disable();
-			
+
 			split.remove(temp);
 			split.add(board);
 
@@ -277,7 +326,7 @@ public class Controller extends JFrame implements MouseListener {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			controlPanel.tempPlayer = null;
-			String n = (color == 0) ? controlPanel.wname : controlPanel.bname;
+			String n = (color == 0) ? wname : bname;
 			JComboBox<String> jc = (color == 0) ? controlPanel.wcombo : controlPanel.bcombo;
 			JComboBox<String> ojc = (color == 0) ? controlPanel.bcombo : controlPanel.wcombo;
 			ArrayList<Player> pl = (color == 0) ? controlPanel.wplayer : controlPanel.bplayer;
@@ -313,7 +362,7 @@ public class Controller extends JFrame implements MouseListener {
 				White = controlPanel.tempPlayer;
 			else
 				Black = controlPanel.tempPlayer;
-				controlPanel.bplayer = opl;
+			controlPanel.bplayer = opl;
 			ojc.removeAllItems();
 			for (Player s : opl)
 				ojc.addItem(s.name());
@@ -340,7 +389,7 @@ public class Controller extends JFrame implements MouseListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			String n = (color == 0) ? controlPanel.wname : controlPanel.bname;
+			String n = (color == 0) ? wname : bname;
 			JPanel j = (color == 0) ? controlPanel.WhitePlayer : controlPanel.BlackPlayer;
 			ArrayList<Player> Players = Player.fetch_players();
 			Iterator<Player> it = Players.iterator();
@@ -442,47 +491,6 @@ public class Controller extends JFrame implements MouseListener {
 	// newlist.add(tempc);
 	// }
 	// return newlist;
-	// }
-
-	// @SuppressWarnings("deprecation")
-	// private void gameend() {
-	// cleandestinations(destinationlist);
-	// displayTime.disable();
-	// timer.countdownTimer.stop();
-	// if (previous != null)
-	// previous.removePiece();
-	// if (chance == 0) {
-	// White.updateGamesWon();
-	// White.Update_Player();
-	// winner = White.name();
-	// } else {
-	// Black.updateGamesWon();
-	// Black.Update_Player();
-	// winner = Black.name();
-	// }
-	// JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
-	// WhitePlayer.remove(wdetails);
-	// BlackPlayer.remove(bdetails);
-	// displayTime.remove(label);
-
-	// displayTime.add(start_button);
-	// showPlayer.remove(mov);
-	// showPlayer.remove(CHNC);
-	// showPlayer.revalidate();
-	// showPlayer.add(timeSlider);
-
-	// split.remove(board);
-	// split.add(temp);
-	// WNewPlayer.enable();
-	// BNewPlayer.enable();
-	// wselect.enable();
-	// bselect.enable();
-	// end = true;
-	// this.disable();
-	// this.dispose();
-	// // Mainboard = new Controller();
-	// // Mainboard.setVisible(true);
-	// // Mainboard.setResizable(false);
 	// }
 
 	// These are the abstract function of the parent class. Only relevant method

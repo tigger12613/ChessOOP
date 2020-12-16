@@ -30,7 +30,6 @@ public class ControlPanel extends JPanel {
 	public ArrayList<String> Bnames = new ArrayList<String>();
 	public JComboBox<String> wcombo, bcombo;
 	
-	public String wname = null, bname = null, winner = null;
 	public String move;
 	public Player tempPlayer;
 	public JScrollPane wscroll, bscroll;
@@ -43,9 +42,6 @@ public class ControlPanel extends JPanel {
         timeSlider = new TimeSlider();
 		
 		move = "White";
-		wname = null;
-		bname = null;
-		winner = null;
 		board = new JPanel(new GridLayout(8, 8));
 		wdetails = new JPanel(new GridLayout(3, 3));
 		bdetails = new JPanel(new GridLayout(3, 3));
