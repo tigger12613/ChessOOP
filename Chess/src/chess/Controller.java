@@ -8,11 +8,12 @@ import javax.swing.event.ChangeListener;
 
 //import org.w3c.dom.events.MouseEvent;
 
-//import pieces.*;
+import pieces.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -35,14 +36,9 @@ public class Controller extends JFrame implements MouseListener {
 	// Variable Declaration
 	private static final int Height = 700;
 	private static final int Width = 1110;
-	//private static ChessGame chessGame;
-	// private static Rook wr01, wr02, br01, br02;
-	// private static Knight wk01, wk02, bk01, bk02;
-	// private static Bishop wb01, wb02, bb01, bb02;
-	// private static Pawn wp[], bp[];
-	// private static Queen wq, bq;
-	// private static King wk, bk;
+	private  ChessGame chessGame;
 	private Cell c, previous;
+	// who can go, 0 is white, 1 is black
 	private int chance = 0;
 	//private Cell boardState[][];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
@@ -77,10 +73,13 @@ public class Controller extends JFrame implements MouseListener {
 	//new
 	private Cell board_block[][] = new Cell[8][8];
 
+	private Cell selectedCell ;
+
 	// Constructor
 	Controller() {
 		// variable initialization
-		//chessGame = new ChessGame();
+		chessGame = new ChessGame();
+		chance = 0;
 
 		timeRemaining = 60;
 		timeSlider = new TimeSlider();
@@ -183,14 +182,6 @@ public class Controller extends JFrame implements MouseListener {
 		BlackPlayer.add(blackstats, BorderLayout.WEST);
 		controlPanel.add(WhitePlayer);
 		controlPanel.add(BlackPlayer);
-
-		// chessGame.setBoard(board);
-		// for(int i=0;i<8;i++){
-		// 	for(int j=0;j<8;j++){
-		// 		chessGame.boardState[i][j].addMouseListener(this);
-		// 	}
-		// }
-
 		//new
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
@@ -200,6 +191,7 @@ public class Controller extends JFrame implements MouseListener {
 				board_block[i][j].addMouseListener(this);
 			}
 		}
+		refleshCells();
 		//
 		// the panel of game setting
 		showPlayer = new JPanel(new FlowLayout());
@@ -423,10 +415,50 @@ public class Controller extends JFrame implements MouseListener {
 		}
 	}
 
+	// put picture on the cells
+	public void refleshCells(){
+		Piece board[][] = chessGame.getboard().board;
+		for(int i=0 ; i<8 ; i++){
+			for(int j=0 ; j<8 ; j++){
+				board_block[i][j].setPiece(board[i][j]);
+			}
+		}
+	}
+	
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		Cell cell = (Cell) e.getSource();
+		System.out.println(String.valueOf(cell.x)+String.valueOf(cell.y));
+		//Board board = chessGame.getboard();
+		Piece board[][] = chessGame.getboard().board;
+		if(selectedCell==null){
+			if(board[cell.x][cell.y]==null){
+				return;
+			}else{
+				if(board[cell.x][cell.y].getcolor()==chance){
+					cell.select();
+					selectedCell = cell;
+				}else{
+					return;
+				}
+			}
+		}else{
+			if(chessGame.move(new Coordinate(selectedCell.x,selectedCell.y), new Coordinate(cell.x,cell.y))){
+				chance = chance & 0x0001;
+				selectedCell.deselect();
+				selectedCell = null;
+				refleshCells();
+			}else{
+				if(board[cell.x][cell.y]==null){
+					selectedCell.deselect();
+					selectedCell = null;
+				}
+				return;
+			}
+		}
+		
+		
 	}
 
 	@Override
