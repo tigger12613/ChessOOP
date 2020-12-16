@@ -1,8 +1,6 @@
 package chess;
 
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class TimeSlider extends JSlider {
     public static int timeRemaining = 60;
