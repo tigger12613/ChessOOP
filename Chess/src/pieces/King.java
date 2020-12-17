@@ -7,17 +7,33 @@ import chess.Coordinate;
 
 public class King extends Piece {
 
-	private boolean isCheck; // Extra variables for King class to keep a track of king's check state
+	private int x, y; // Extra variables for King class to keep a track of king's position
 
 	// King Constructor
 	public King(String i, String p, int c, int x, int y) {
+		setx(x);
+		sety(y);
 		setId(i);
 		setPath(p);
 		setColor(c);
-		setXPosition(x);
-		setYPosition(y);
 	}
 
+	// general value access functions
+	public void setx(int x) {
+		this.x = x;
+	}
+
+	public void sety(int y) {
+		this.y = y;
+	}
+
+	public int getx() {
+		return x;
+	}
+
+	public int gety() {
+		return y;
+	}
 
 	// Move Function for King Overridden from Pieces
 	public ArrayList<Coordinate> move(Board board, Coordinate coordinate) {
@@ -46,9 +62,6 @@ public class King extends Piece {
 	public boolean isindanger(Piece state[][]) {
 
 		// Checking for attack from left,right,up and down
-		int x = this.getXPosition(),
-		    y = this.getYPosition();
-		
 		for (int i = x + 1; i < 8; i++) {
 			if (state[i][y] == null)
 				continue;
@@ -206,12 +219,5 @@ public class King extends Piece {
 				return true;
 		}
 		return false;
-	}
-	
-	public void setCheck() {
-		isCheck = true;
-	}
-	public boolean checkState() {
-		return isCheck;
 	}
 }

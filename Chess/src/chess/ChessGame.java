@@ -14,37 +14,7 @@ public class ChessGame {
 	// public Piece board[][];
 	private Board board = new Board();
     
-    private static Rook wr01, wr02, br01, br02;
-	private static Knight wk01, wk02, bk01, bk02;
-	private static Bishop wb01, wb02, bb01, bb02;
-	private static Pawn wp[], bp[];
-	private static Queen wq, bq;
-    private static King wk, bk;
-    
-    ChessGame(){
-        wr01 = new Rook("WR01", "White_Rook.png", 0);
-		wr02 = new Rook("WR02", "White_Rook.png", 0);
-		br01 = new Rook("BR01", "Black_Rook.png", 1);
-		br02 = new Rook("BR02", "Black_Rook.png", 1);
-		wk01 = new Knight("WK01", "White_Knight.png", 0);
-		wk02 = new Knight("WK02", "White_Knight.png", 0);
-		bk01 = new Knight("BK01", "Black_Knight.png", 1);
-		bk02 = new Knight("BK02", "Black_Knight.png", 1);
-		wb01 = new Bishop("WB01", "White_Bishop.png", 0);
-		wb02 = new Bishop("WB02", "White_Bishop.png", 0);
-		bb01 = new Bishop("BB01", "Black_Bishop.png", 1);
-		bb02 = new Bishop("BB02", "Black_Bishop.png", 1);
-		wq = new Queen("WQ", "White_Queen.png", 0);
-		bq = new Queen("BQ", "Black_Queen.png", 1);
-		wk = new King("WK", "White_King.png", 0, 7, 3);
-		bk = new King("BK", "Black_King.png", 1, 0, 3);
-		wp = new Pawn[8];
-		bp = new Pawn[8];
-		for (int i = 0; i < 8; i++) {
-			wp[i] = new Pawn("WP0" + (i + 1), "White_Pawn.png", 0);
-			bp[i] = new Pawn("BP0" + (i + 1), "Black_Pawn.png", 1);
-		}
-    }
+    ChessGame(){}
 
     // A function to retrieve the Black King or White King
 	public King getKing(int color) {
@@ -135,27 +105,27 @@ public class ChessGame {
 	// 	return true;
     // }
     
-    public boolean ischeck(int chance){
-        return boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck();
-    }
+    // public boolean ischeck(int chance){
+    //     return boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck();
+    // }
     
     //TODO:
     //startGame;
     public startGame();
-    //select a coordinate and return the valid cordinates the chess can move
-    public ArrayList<Coordinate> validCoordinates(Coordinate coordinate){};
+    // //select a coordinate and return the valid cordinates the chess can move
+    // public ArrayList<Coordinate> validCoordinates(Coordinate coordinate){};
     //get the full board;
     public Board getBoard(){
 		return board;
 	}
-    //move chess at Coordinate a to coordinate b. if the move is valid return true else return false
-    public boolean move(Coordinate a,Coordinate b){};
-    // //return if the color king is be checkmate
-    public boolean checkmate(int color);
-    // return 0 if white win, 1 if black win, -1 is the game is not end.
-    public int isGameEnd(){};
-    // return if the color is be check
-    public boolean isCheck(int color){};
+    // //move chess at Coordinate a to coordinate b. if the move is valid return true else return false
+    // public boolean move(Coordinate a,Coordinate b){};
+    // // //return if the color king is be checkmate
+    // public boolean checkmate(int color);
+    // // return 0 if white win, 1 if black win, -1 is the game is not end.
+    // public int isGameEnd(){};
+    // // return if the color is be check
+    // public boolean isCheck(int color){};
 	
     
 }

@@ -1,8 +1,5 @@
 package pieces;
 
-import java.awt.BorderLayout;
-
-import java.awt.Color;
 import java.util.ArrayList;
 
 import chess.Board;
@@ -19,8 +16,6 @@ public abstract class Piece implements Cloneable {
 
 	// Member Variables
 	private int color;
-	//piece position
-	private int xPosition, yPosition;
 	private String id = null;
 	private String path;
 	protected ArrayList<Coordinate> possiblemoves = new ArrayList<Coordinate>(); // Protected (access from child classes)
@@ -42,16 +37,7 @@ public abstract class Piece implements Cloneable {
 	public void setColor(int c) {
 		this.color = c;
 	}
-	
-	//xPosition Setter
-	public void setXPosition(int x) {
-		this.xPosition = x;
-	}
-	
-	//yPosition Setter
-	public void setYPosition(int y) {
-		this.yPosition = y;
-	}
+
 	// Path getter
 	public String getPath() {
 		return path;
@@ -66,14 +52,7 @@ public abstract class Piece implements Cloneable {
 	public int getcolor() {
 		return this.color;
 	}
-	// xPosition Getter
-	public int getXPosition() {
-		return this.xPosition;
-	}
-	// yPosition Getter
-	public int getYPosition() {
-		return this.yPosition;
-	}
+
 	// Function to return the a "shallow" copy of the object. The copy has exact
 	// same variable value but different reference
 	public Piece getcopy() throws CloneNotSupportedException {

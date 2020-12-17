@@ -14,12 +14,10 @@ import chess.Coordinate;
 public class Bishop extends Piece {
 
 	// Constructor
-	public Bishop(String i, String p, int c, int x, int y) {
+	public Bishop(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
-		setXPosition(x);
-		setYPosition(y);
 	}
 
 	// move function defined. It returns a list of all the possible destinations of

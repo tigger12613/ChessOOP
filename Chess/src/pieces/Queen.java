@@ -11,12 +11,10 @@ import chess.Coordinate;
 public class Queen extends Piece {
 
 	// Constructors
-	public Queen(String i, String p, int c, int x, int y) {
+	public Queen(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
-		setXPosition(x);
-		setYPosition(y);
 	}
 
 	// Move Function Defined

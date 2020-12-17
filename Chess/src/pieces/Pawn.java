@@ -12,12 +12,10 @@ import chess.Coordinate;
 public class Pawn extends Piece {
 
 	// COnstructors
-	public Pawn(String i, String p, int c, int x, int y) {
+	public Pawn(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
-		setXPosition(x);
-		setYPosition(y);
 	}
 
 	// Move Function Overridden
