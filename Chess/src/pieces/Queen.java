@@ -2,8 +2,8 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
-
+import chess.Board;
+import chess.Coordinate;
 /**
  * This is the Queen Class inherited from the abstract Piece class
  *
@@ -18,21 +18,25 @@ public class Queen extends Piece {
 	}
 
 	// Move Function Defined
-	public ArrayList<Cell> move(Cell state[][], int x, int y) {
+	public ArrayList<Coordinate> move(Board board, Coordinate coordinate) {
 		// Queen has most number of possible moves
 		// Queen can move any number of steps in all 8 direction
 		// The possible moves of queen is a combination of Rook and Bishop
 		possiblemoves.clear();
 
 		// Checking possible moves in vertical direction
+		int x = coordinate.getX(),
+			y = coordinate.getY();
+			
 		int tempx = x - 1;
 		while (tempx >= 0) {
-			if (state[tempx][y].getpiece() == null)
-				possiblemoves.add(state[tempx][y]);
-			else if (state[tempx][y].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, y);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][y]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx--;
@@ -40,12 +44,13 @@ public class Queen extends Piece {
 
 		tempx = x + 1;
 		while (tempx < 8) {
-			if (state[tempx][y].getpiece() == null)
-				possiblemoves.add(state[tempx][y]);
-			else if (state[tempx][y].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, y);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][y]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx++;
@@ -54,24 +59,26 @@ public class Queen extends Piece {
 		// Checking possible moves in horizontal Direction
 		int tempy = y - 1;
 		while (tempy >= 0) {
-			if (state[x][tempy].getpiece() == null)
-				possiblemoves.add(state[x][tempy]);
-			else if (state[x][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(x, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[x][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempy--;
 		}
 		tempy = y + 1;
 		while (tempy < 8) {
-			if (state[x][tempy].getpiece() == null)
-				possiblemoves.add(state[x][tempy]);
-			else if (state[x][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(x, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[x][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempy++;
@@ -81,12 +88,13 @@ public class Queen extends Piece {
 		tempx = x + 1;
 		tempy = y - 1;
 		while (tempx < 8 && tempy >= 0) {
-			if (state[tempx][tempy].getpiece() == null)
-				possiblemoves.add(state[tempx][tempy]);
-			else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx++;
@@ -95,12 +103,13 @@ public class Queen extends Piece {
 		tempx = x - 1;
 		tempy = y + 1;
 		while (tempx >= 0 && tempy < 8) {
-			if (state[tempx][tempy].getpiece() == null)
-				possiblemoves.add(state[tempx][tempy]);
-			else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx--;
@@ -109,12 +118,13 @@ public class Queen extends Piece {
 		tempx = x - 1;
 		tempy = y - 1;
 		while (tempx >= 0 && tempy >= 0) {
-			if (state[tempx][tempy].getpiece() == null)
-				possiblemoves.add(state[tempx][tempy]);
-			else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx--;
@@ -123,12 +133,13 @@ public class Queen extends Piece {
 		tempx = x + 1;
 		tempy = y + 1;
 		while (tempx < 8 && tempy < 8) {
-			if (state[tempx][tempy].getpiece() == null)
-				possiblemoves.add(state[tempx][tempy]);
-			else if (state[tempx][tempy].getpiece().getcolor() == this.getcolor())
+			Coordinate c = new Coordinate(tempx, tempy);
+			if (board.getPiece(c) == null)
+				possiblemoves.add(c);
+			else if (board.getPiece(c).getcolor() == this.getcolor())
 				break;
 			else {
-				possiblemoves.add(state[tempx][tempy]);
+				possiblemoves.add(c);
 				break;
 			}
 			tempx++;

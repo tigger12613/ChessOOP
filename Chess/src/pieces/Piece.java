@@ -2,7 +2,8 @@ package pieces;
 
 import java.util.ArrayList;
 
-import chess.Cell;
+import chess.Board;
+import chess.Coordinate;
 
 /**
  * This is the Piece Class. It is an abstract class from which all the actual
@@ -17,9 +18,10 @@ public abstract class Piece implements Cloneable {
 	private int color;
 	private String id = null;
 	private String path;
-	protected ArrayList<Cell> possiblemoves = new ArrayList<Cell>(); // Protected (access from child classes)
+	protected ArrayList<Coordinate> possiblemoves = new ArrayList<Coordinate>(); // Protected (access from child classes)
 
-	public abstract ArrayList<Cell> move(Cell pos[][], int x, int y); // Abstract Function. Must be overridden
+	// public abstract ArrayList<Coordinate> move(Cell pos[][], int x, int y); // Abstract Function. Must be overridden
+	public abstract ArrayList<Coordinate> move(Board board, Coordinate coordinate);
 
 	// Id Setter
 	public void setId(String id) {

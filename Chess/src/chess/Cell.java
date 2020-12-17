@@ -106,6 +106,7 @@ public class Cell extends JPanel implements Cloneable {
 		return ischeck;
 	}
 
+	//!!!!
 	// TODO:should be removed
 	// public Piece getpiece(){
 	// 	return new Pawn("1", "wp", 1);

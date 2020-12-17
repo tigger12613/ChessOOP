@@ -11,7 +11,8 @@ import pieces.*;
 public class ChessGame {
 
     public Cell boardState[][];
-    public Piece board[][];
+	// public Piece board[][];
+	private Board board = new Board();
     
     private static Rook wr01, wr02, br01, br02;
 	private static Knight wk01, wk02, bk01, bk02;
@@ -142,16 +143,19 @@ public class ChessGame {
     //startGame;
     public startGame();
     //select a coordinate and return the valid cordinates the chess can move
-    public Coordinate[] validCoordinates(Coordinate coordinate);
+    public ArrayList<Coordinate> validCoordinates(Coordinate coordinate){};
     //get the full board;
-    public board getboard();
+    public Board getBoard(){
+		return board;
+	}
     //move chess at Coordinate a to coordinate b. if the move is valid return true else return false
-    public boolean move(Coordinate a,Coordinate b);
-    //return if the color king is be checkmate
+    public boolean move(Coordinate a,Coordinate b){};
+    // //return if the color king is be checkmate
     public boolean checkmate(int color);
     // return 0 if white win, 1 if black win, -1 is the game is not end.
-    public int isGameEnd();
+    public int isGameEnd(){};
     // return if the color is be check
-    public boolean isCheck(int color);
+    public boolean isCheck(int color){};
+	
     
 }
