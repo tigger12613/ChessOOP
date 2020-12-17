@@ -12,7 +12,7 @@ public class ChessGame {
 
     // public Cell boardState[][];
 	// public Piece board[][];
-	private Board board = new Board();
+	public Board board = new Board();
     
     ChessGame(){}
 
@@ -109,30 +109,6 @@ public class ChessGame {
     //     return boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck();
     // }
     
-<<<<<<< HEAD
-    // // //TODO:
-    // //startGame;
-    // public startGame();
-    // //select a coordinate and return the valid cordinates the chess can move
-    public Coordinate[] validCoordinates(Coordinate coordinate){
-		Coordinate[] a = { new Coordinate(0, 0), new Coordinate(0, 1) };
-		return a;
-	};
-    // //get the full board;
-    public Board getboard(){
-		return new Board();
-	}
-    // //move chess at Coordinate a to coordinate b. if the move is valid return true else return false
-    public boolean move(Coordinate a,Coordinate b){
-		return false;
-	}
-    // //return if the color king is be checkmate
-    // public boolean checkmate(int color);
-    // // return 0 if white win, 1 if black win, -1 is the game is not end.
-    // public int isGameEnd();
-    // // return if the color is be check
-    // public boolean isCheck(int color);
-=======
     //TODO:
     //startGame;
     // public startGame();
@@ -151,6 +127,5 @@ public class ChessGame {
     // // return if the color is be check
     // public boolean isCheck(int color){};
 	
->>>>>>> cck_new
     
 }

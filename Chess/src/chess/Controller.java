@@ -124,7 +124,7 @@ public class Controller extends JFrame implements MouseListener {
 
 	// put picture on the cells
 	public void refleshCells() {
-		Piece board[][] = chessGame.getboard().board;
+		Piece board[][] = chessGame.getBoard().board;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				boardView.board_block[i][j].setPiece(board[i][j]);
@@ -180,7 +180,7 @@ public class Controller extends JFrame implements MouseListener {
 		Cell cell = (Cell) e.getSource();
 		System.out.println(String.valueOf(cell.x) + String.valueOf(cell.y));
 		// Board board = chessGame.getboard();
-		Piece board[][] = chessGame.getboard().board;
+		Piece board[][] = chessGame.getBoard().board;
 		// no selected
 		if (selectedCell == null) {
 			if (board[cell.x][cell.y] == null) {
@@ -189,10 +189,10 @@ public class Controller extends JFrame implements MouseListener {
 				if (board[cell.x][cell.y].getcolor() == chance) {
 					cell.select();
 					// get the valid position it can go
-					Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(cell.x, cell.y));
+					ArrayList<Coordinate> validCoordinates = chessGame.getBoard().validCoordinates(new Coordinate(cell.x, cell.y));
 					// mark the valid position
-					for (int i = 0; i < validCoordinates.length; i++) {
-						boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()]
+					for (int i = 0; i < validCoordinates.size(); i++) {
+						boardView.board_block[validCoordinates.get(i).getX()][validCoordinates.get(i).getY()]
 								.setpossibledestination();
 					}
 					selectedCell = cell;
@@ -203,13 +203,13 @@ public class Controller extends JFrame implements MouseListener {
 			// selected a chess
 		} else {
 			// remove the valid position color
-			Coordinate[] validCoordinates = chessGame.validCoordinates(new Coordinate(selectedCell.x, selectedCell.y));
-			for (int i = 0; i < validCoordinates.length; i++) {
-				boardView.board_block[validCoordinates[i].getX()][validCoordinates[i].getY()]
+			ArrayList<Coordinate> validCoordinates = chessGame.getBoard().validCoordinates(new Coordinate(selectedCell.x, selectedCell.y));
+			for (int i = 0; i < validCoordinates.size(); i++) {
+				boardView.board_block[validCoordinates.get(i).getX()][validCoordinates.get(i).getY()]
 						.removepossibledestination();
 			}
 			// try to move the chess
-			if (chessGame.move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
+			if (chessGame.getBoard().move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
 				// if(chessGame.checkmate(chance & 1)){
 				// 	gameEnd();
 				// }
