@@ -64,10 +64,10 @@ public class Board {
 
 	public boolean isCheck(int color){
 		if(color == 0){
-			return wk.isindanger();
+			return wk.isindanger(board);
 		}
 		else{
-			return bk.isindanger();
+			return bk.isindanger(board);
 		}
 		
 	}
