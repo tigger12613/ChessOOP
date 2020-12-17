@@ -10,19 +10,19 @@ import pieces.*;
 
 public class ChessGame {
 
-    public Cell boardState[][];
+    // public Cell boardState[][];
 	// public Piece board[][];
 	private Board board = new Board();
     
     ChessGame(){}
 
     // A function to retrieve the Black King or White King
-	public King getKing(int color) {
-		if (color == 0)
-			return wk;
-		else
-			return bk;
-    }
+	// public King getKing(int color) {
+	// 	if (color == 0)
+	// 		return wk;
+	// 	else
+	// 		return bk;
+    // }
 
     // Function to check if the king will be in danger if the given move is made
 	// public boolean willkingbeindanger(Cell fromcell, Cell tocell, int chance) {
@@ -111,7 +111,7 @@ public class ChessGame {
     
     //TODO:
     //startGame;
-    public startGame();
+    // public startGame();
     // //select a coordinate and return the valid cordinates the chess can move
     // public ArrayList<Coordinate> validCoordinates(Coordinate coordinate){};
     //get the full board;

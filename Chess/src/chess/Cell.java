@@ -106,9 +106,17 @@ public class Cell extends JPanel implements Cloneable {
 		return ischeck;
 	}
 
-	//!!!!
 	// TODO:should be removed
-	// public Piece getpiece(){
-	// 	return new Pawn("1", "wp", 1);
-	// }
+	public Piece getpiece(){
+		return new Pawn("1", "wp", 1);
+	}
+
+	public void setPiece(Piece p)    //Function to inflate a cell with a piece
+	{
+		if(p!=null){
+			ImageIcon img=new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
+			content=new JLabel(img);
+			this.add(content);
+		}
+	}
 }
