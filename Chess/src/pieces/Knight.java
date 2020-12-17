@@ -13,10 +13,12 @@ import chess.Coordinate;
 public class Knight extends Piece {
 
 	// Constructor
-	public Knight(String i, String p, int c) {
+	public Knight(String i, String p, int c, int x, int y) {
 		setId(i);
 		setPath(p);
 		setColor(c);
+		setXPosition(x);
+		setYPosition(y);
 	}
 
 	// Move Function overridden

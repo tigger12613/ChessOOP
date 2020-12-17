@@ -12,10 +12,12 @@ import chess.Coordinate;
 public class Rook extends Piece {
 
 	// Constructor
-	public Rook(String i, String p, int c) {
+	public Rook(String i, String p, int c, int x, int y) {
 		setId(i);
 		setPath(p);
 		setColor(c);
+		setXPosition(x);
+		setYPosition(y);
 	}
 
 	// Move function defined

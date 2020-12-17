@@ -44,7 +44,12 @@ public class Controller extends JFrame implements MouseListener {
 	// private static King wk, bk;
 	private Cell c, previous;
 	private int chance = 0;
+<<<<<<< HEAD
 	//private Cell boardState[][];
+=======
+	// private Cell boardState[][];
+    private Piece state[][] = new Piece[8][8];
+>>>>>>> ed2b780c3433a97d6a6b38210e19a572041d69f3
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 	private JPanel board = new JPanel(new GridLayout(8, 8));
@@ -80,7 +85,55 @@ public class Controller extends JFrame implements MouseListener {
 	// Constructor
 	Controller() {
 		// variable initialization
+<<<<<<< HEAD
 		//chessGame = new ChessGame();
+=======
+//		wr01 = new Rook("WR01", "White_Rook.png", 0, 7, 0, state);
+//		wr02 = new Rook("WR02", "White_Rook.png", 0, 7, 7, state);
+//		br01 = new Rook("BR01", "Black_Rook.png", 1, 0, 0, state);
+//		br02 = new Rook("BR02", "Black_Rook.png", 1, 0, 7, state);
+//		wk01 = new Knight("WK01", "White_Knight.png", 0, 7 ,1, state);
+//		wk02 = new Knight("WK02", "White_Knight.png", 0, 7, 6, state);
+//		bk01 = new Knight("BK01", "Black_Knight.png", 1, 0, 1, state);
+//		bk02 = new Knight("BK02", "Black_Knight.png", 1, 0, 6, state);
+//		wb01 = new Bishop("WB01", "White_Bishop.png", 0, 7, 2, state);
+//		wb02 = new Bishop("WB02", "White_Bishop.png", 0, 7, 5, state);
+//		bb01 = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2, state);
+//		bb02 = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5, state);
+//		wq = new Queen("WQ", "White_Queen.png", 0, 7, 4, state);
+//		bq = new Queen("BQ", "Black_Queen.png", 1, 0, 4, state);
+//		wk = new King("WK", "White_King.png", 0, 7, 3, state);
+//		bk = new King("BK", "Black_King.png", 1, 0, 3, state);
+//		wp = new Pawn[8];
+//		bp = new Pawn[8];
+//		for (int j = 0; j < 8; j++) {
+//			wp[j] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j, state);
+//			bp[j] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j, state);
+//		}
+		// variable initialization
+		state[7][0] = new Rook("WR01", "White_Rook.png", 0, 7, 0);
+		state[7][7] = new Rook("WR02", "White_Rook.png", 0, 7, 7);
+		state[0][0] = new Rook("BR01", "Black_Rook.png", 1, 0, 0);
+		state[0][7] = new Rook("BR02", "Black_Rook.png", 1, 0, 7);
+		state[7][1] = new Knight("WK01", "White_Knight.png", 0, 7 ,1);
+		state[7][6] = new Knight("WK02", "White_Knight.png", 0, 7, 6);
+		state[0][1] = new Knight("BK01", "Black_Knight.png", 1, 0, 1);
+		state[0][6] = new Knight("BK02", "Black_Knight.png", 1, 0, 6);
+		state[7][2] = new Bishop("WB01", "White_Bishop.png", 0, 7, 2);
+		state[7][5] = new Bishop("WB02", "White_Bishop.png", 0, 7, 5);
+		state[0][2] = new Bishop("BB01", "Black_Bishop.png", 1, 0, 2);
+		state[0][5] = new Bishop("BB02", "Black_Bishop.png", 1, 0, 5);
+		state[7][4] = new Queen("WQ", "White_Queen.png", 0, 7, 4);
+		state[0][4] = new Queen("BQ", "Black_Queen.png", 1, 0, 4);
+		wk = new King("WK", "White_King.png", 0, 7, 3);
+		bk = new King("BK", "Black_King.png", 1, 0, 3);
+		state[7][3] = wk;
+		state[0][3] = bk;
+		for (int j = 0; j < 8; j++) {
+			state[6][j] = new Pawn("WP0" + (j + 1), "White_Pawn.png", 0, 6, j);
+			state[1][j] = new Pawn("BP0" + (j + 1), "Black_Pawn.png", 1, 1, j);
+		}
+>>>>>>> ed2b780c3433a97d6a6b38210e19a572041d69f3
 
 		timeRemaining = 60;
 		timeSlider = new JSlider();
@@ -180,6 +233,7 @@ public class Controller extends JFrame implements MouseListener {
 		controlPanel.add(WhitePlayer);
 		controlPanel.add(BlackPlayer);
 
+<<<<<<< HEAD
 		// chessGame.setBoard(board);
 		// for(int i=0;i<8;i++){
 		// 	for(int j=0;j<8;j++){
@@ -198,6 +252,54 @@ public class Controller extends JFrame implements MouseListener {
 		}
 		//
 
+=======
+		// Defining all the Cells
+		/*boardState = new Cell[8][8];
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++) {
+				P = null;
+				if (i == 0 && j == 0)
+					P = br01;
+				else if (i == 0 && j == 7)
+					P = br02;
+				else if (i == 7 && j == 0)
+					P = wr01;
+				else if (i == 7 && j == 7)
+					P = wr02;
+				else if (i == 0 && j == 1)
+					P = bk01;
+				else if (i == 0 && j == 6)
+					P = bk02;
+				else if (i == 7 && j == 1)
+					P = wk01;
+				else if (i == 7 && j == 6)
+					P = wk02;
+				else if (i == 0 && j == 2)
+					P = bb01;
+				else if (i == 0 && j == 5)
+					P = bb02;
+				else if (i == 7 && j == 2)
+					P = wb01;
+				else if (i == 7 && j == 5)
+					P = wb02;
+				else if (i == 0 && j == 3)
+					P = bk;
+				else if (i == 0 && j == 4)
+					P = bq;
+				else if (i == 7 && j == 3)
+					P = wk;
+				else if (i == 7 && j == 4)
+					P = wq;
+				else if (i == 1)
+					P = bp[j];
+				else if (i == 6)
+					P = wp[j];
+				cell = new Cell(i, j, P);
+				cell.addMouseListener(this);
+				board.add(cell);
+				boardState[i][j] = cell;
+			}*/
+>>>>>>> ed2b780c3433a97d6a6b38210e19a572041d69f3
 		showPlayer = new JPanel(new FlowLayout());
 		showPlayer.add(timeSlider);
 		JLabel setTime = new JLabel("Set Timer(in mins):");
@@ -240,7 +342,48 @@ public class Controller extends JFrame implements MouseListener {
 
 		content.add(split);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+<<<<<<< HEAD
 	}	
+=======
+	}
+
+	// A function to change the chance from White Player to Black Player or vice
+	// verse
+	// It is made public because it is to be accessed in the Time Class
+	public void changechance() {
+		if (getKing(chance).checkState()) {
+			chance ^= 1;
+			gameend();
+		}
+		if (destinationlist.isEmpty() == false)
+			cleandestinations(destinationlist);
+		if (previous != null)
+			previous.deselect();
+		previous = null;
+		chance ^= 1;
+		if (!end && timer != null) {
+			timer.reset();
+			timer.start();
+			showPlayer.remove(CHNC);
+			if (this.move == "White")
+                this.move = "Black";
+			else
+                this.move = "White";
+			CHNC.setText(this.move);
+			showPlayer.add(CHNC);
+		}
+	}
+
+	// A function to retrieve the Black King or White King
+	private King getKing(int color) {
+		if (color == 0) {
+			return wk;
+		}
+		else {
+			return bk;
+		}
+	}
+>>>>>>> ed2b780c3433a97d6a6b38210e19a572041d69f3
 
 	// A function to clean the highlights of possible destination cells
 	private void cleandestinations(ArrayList<Cell> destlist) // Function to clear the last move's destinations
@@ -257,6 +400,240 @@ public class Controller extends JFrame implements MouseListener {
 			it.next().setpossibledestination();
 	}
 
+<<<<<<< HEAD
+=======
+	// Function to check if the king will be in danger if the given move is made
+	private boolean willkingbeindanger(Piece frompiece, Position dest) {
+		Piece newboardstate[][] = new Piece[8][8];
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++) {
+				try {
+					newboardstate[i][j] = state[i][j].getcopy();
+				} catch (CloneNotSupportedException e) {
+					newboardstate[i][j] = null;
+				} catch (NullPointerException e) {
+					newboardstate[i][j] = null;
+				}
+			}
+		}
+		newboardstate[dest.getXPosition()][dest.getYPosition()] = frompiece;
+		newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+		frompiece.setXPosition(dest.getXPosition());
+		frompiece.setYPosition(dest.getYPosition());
+		
+		King currentKing = getKing(chance);
+		if ( ((King) (newboardstate[currentKing.getXPosition()][currentKing.getYPosition()]) ).isindanger(newboardstate) == true)
+			return true;
+		else
+			return false;
+	}
+
+	// A function to eliminate the possible moves that will put the King in danger
+	private ArrayList<Position> filterdestination(ArrayList<Position> destlist, Piece frompiece) {
+		ArrayList<Position> newlist = new ArrayList<Position>();
+		Piece newboardstate[][] = new Piece[8][8];
+		ListIterator<Position> it = destlist.listIterator();
+		while (it.hasNext()) {
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					try {
+						newboardstate[i][j] = state[i][j].getcopy();
+					} catch (CloneNotSupportedException e) {
+						newboardstate[i][j] = null;
+					} catch (NullPointerException e) {
+						newboardstate[i][j] = null;
+					}
+				}
+			}
+			Position destPosition = it.next();
+			newboardstate[destPosition.getXPosition()][destPosition.getYPosition()] = newboardstate[frompiece.getXPosition()][frompiece.getYPosition()];
+			newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+			if (getKing(chance).isindanger(state) == false) {
+				newlist.add(destPosition);
+			}
+		}
+		return newlist;
+	}
+
+	// A Function to filter the possible moves when the king of the current player
+	// is under Check
+	private ArrayList<Position> incheckfilter(ArrayList<Position> destlist, Piece frompiece, int color) {
+		ArrayList<Position> newlist = new ArrayList<Position>();
+		Piece newboardstate[][] = new Piece[8][8];
+		ListIterator<Position> it = destlist.listIterator();
+		while (it.hasNext()) {
+			for (int i = 0; i < 8; i++)
+				for (int j = 0; j < 8; j++) {
+					try {
+						newboardstate[i][j] = state[i][j].getcopy();
+					} catch (CloneNotSupportedException e) {
+						newboardstate[i][j] = null;
+					} catch (NullPointerException e) {
+						newboardstate[i][j] = null;
+					}
+				}
+			Position destPosition = it.next();
+			newboardstate[destPosition.getXPosition()][destPosition.getYPosition()] = newboardstate[frompiece.getXPosition()][frompiece.getYPosition()];
+			newboardstate[frompiece.getXPosition()][frompiece.getYPosition()] = null;
+			if (getKing(chance).isindanger(state) == false)
+				newlist.add(destPosition);
+		}
+		return newlist;
+	}
+
+	// A function to check if the King is check-mate. The Game Ends if this function
+	// returns true.
+	public boolean checkmate(int color) {
+		ArrayList<Position> dlist = new ArrayList<Position>();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (state[i][j] != null && state[i][j].getcolor() == color) {
+					dlist.clear();
+					dlist = state[i][j].move(state, i, j);
+					dlist = incheckfilter(dlist, state[i][j], color);
+					if (dlist.size() != 0)
+						return false;
+				}
+			}
+		}
+		return true;
+	}
+	public Piece getPiece(int x, int y) {
+		return state[x][y];
+	}
+
+	@SuppressWarnings("deprecation")
+	private void gameend() {
+		cleandestinations(destinationlist);
+		displayTime.disable();
+		timer.countdownTimer.stop();
+		if (previous != null)
+			previous.removePiece();
+		if (chance == 0) {
+			White.updateGamesWon();
+			White.Update_Player();
+			winner = White.name();
+		} else {
+			Black.updateGamesWon();
+			Black.Update_Player();
+			winner = Black.name();
+		}
+		JOptionPane.showMessageDialog(board, "Checkmate!!!\n" + winner + " wins");
+		WhitePlayer.remove(wdetails);
+		BlackPlayer.remove(bdetails);
+		displayTime.remove(label);
+
+		displayTime.add(start);
+		showPlayer.remove(mov);
+		showPlayer.remove(CHNC);
+		showPlayer.revalidate();
+		showPlayer.add(timeSlider);
+
+		split.remove(board);
+		split.add(temp);
+		WNewPlayer.enable();
+		BNewPlayer.enable();
+		wselect.enable();
+		bselect.enable();
+		end = true;
+		this.disable();
+		this.dispose();
+		// Mainboard = new Controller();
+		// Mainboard.setVisible(true);
+		// Mainboard.setResizable(false);
+	}
+
+	// These are the abstract function of the parent class. Only relevant method
+	// here is the On-Click Fuction
+	// which is called when the user clicks on a particular cell
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		c = (Cell) arg0.getSource();
+		if (previous == null) {
+			if (c.getpiece() != null) {
+				if (c.getpiece().getcolor() != chance)
+					return;
+				c.select();
+				previous = c;
+				destinationlist.clear();
+				destinationlist = c.getpiece().move(boardState, c.x, c.y);
+				if (c.getpiece() instanceof King)
+					destinationlist = filterdestination(destinationlist, c);
+				else {
+					if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck())
+						destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
+					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
+						destinationlist.clear();
+				}
+				highlightdestinations(destinationlist);
+			}
+		} else {
+			if (c.x == previous.x && c.y == previous.y) {
+				c.deselect();
+				cleandestinations(destinationlist);
+				destinationlist.clear();
+				previous = null;
+			} else if (c.getpiece() == null || previous.getpiece().getcolor() != c.getpiece().getcolor()) {
+				if (c.ispossibledestination()) {
+					if (c.getpiece() != null)
+						c.removePiece();
+					c.setPiece(previous.getpiece());
+					if (previous.ischeck())
+						previous.removecheck();
+					previous.removePiece();
+					if (getKing(chance ^ 1).isindanger(boardState)) {
+						boardState[getKing(chance ^ 1).getx()][getKing(chance ^ 1).gety()].setcheck();
+						if (checkmate(getKing(chance ^ 1).getcolor())) {
+							previous.deselect();
+							if (previous.getpiece() != null)
+								previous.removePiece();
+							gameend();
+						}
+					}
+					if (getKing(chance).isindanger(boardState) == false)
+						boardState[getKing(chance).getx()][getKing(chance).gety()].removecheck();
+					if (c.getpiece() instanceof King) {
+						((King) c.getpiece()).setx(c.x);
+						((King) c.getpiece()).sety(c.y);
+					}
+					changechance();
+					if (!end) {
+						timer.reset();
+						timer.start();
+					}
+				}
+				if (previous != null) {
+					previous.deselect();
+					previous = null;
+				}
+				cleandestinations(destinationlist);
+				destinationlist.clear();
+			} else if (previous.getpiece().getcolor() == c.getpiece().getcolor()) {
+				previous.deselect();
+				cleandestinations(destinationlist);
+				destinationlist.clear();
+				c.select();
+				previous = c;
+				destinationlist = c.getpiece().move(boardState, c.x, c.y);
+				if (c.getpiece() instanceof King)
+					destinationlist = filterdestination(destinationlist, c);
+				else {
+					if (boardState[getKing(chance).getx()][getKing(chance).gety()].ischeck())
+						destinationlist = new ArrayList<Cell>(filterdestination(destinationlist, c));
+					else if (destinationlist.isEmpty() == false && willkingbeindanger(c, destinationlist.get(0)))
+						destinationlist.clear();
+				}
+				highlightdestinations(destinationlist);
+			}
+		}
+		if (c.getpiece() != null && c.getpiece() instanceof King) {
+			((King) c.getpiece()).setx(c.x);
+			((King) c.getpiece()).sety(c.y);
+		}
+	}
+
+>>>>>>> ed2b780c3433a97d6a6b38210e19a572041d69f3
 	// Other Irrelevant abstract function. Only the Click Event is captured.
 
 	class START implements ActionListener {
