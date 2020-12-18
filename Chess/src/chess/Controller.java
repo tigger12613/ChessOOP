@@ -40,7 +40,7 @@ public class Controller extends JFrame implements MouseListener {
 	// private Cell c, previous;
 	// who can go, 0 is white, 1 is black
 	private int chance = 0;
-	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
+	//private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White = null, Black = null;
 
 	private JPanel board = new JPanel(new GridLayout(8, 8));
@@ -135,7 +135,7 @@ public class Controller extends JFrame implements MouseListener {
 	@SuppressWarnings("deprecation")
 	private void gameEnd() {
 		String winner;
-		cleandestinations(destinationlist);
+		//cleandestinations(destinationlist);
 		controlPanel.displayTime.disable();
 		controlPanel.timer.countdownTimer.stop();
 		// if (previous != null)
