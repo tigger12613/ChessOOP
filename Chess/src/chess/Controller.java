@@ -210,14 +210,16 @@ public class Controller extends JFrame implements MouseListener {
 			}
 			// try to move the chess
 			if (chessGame.getBoard().move(new Coordinate(selectedCell.x, selectedCell.y), new Coordinate(cell.x, cell.y))) {
-				// if(chessGame.checkmate(chance & 1)){
-				// 	gameEnd();
-				// }
+				if(chessGame.board.checkmate(chance ^ 1)){
+					gameEnd();
+				}
 				selectedCell.deselect();
 				selectedCell = null;
 				refleshCells();
-
-				chance = chance & 1;
+				if(chessGame.board.whoWin() != -1){
+					gameEnd();
+				}
+				chance = chance ^ 1;
 
 			} else {
 				selectedCell.deselect();
