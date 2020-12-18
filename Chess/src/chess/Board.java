@@ -47,10 +47,14 @@ public class Board {
 		ArrayList<Coordinate> validList = validCoordinates(a);
 		for(int i=0; i<validList.size(); i++){
 			if( (validList.get(i).getX() == b.getX()) && (validList.get(i).getY() == b.getY()) ){
-				return true;
+				board[b.getX()][b.getY()] =  board[a.getX()][a.getY()];
+				if(board[b.getX()][b.getY()] == board[a.getX()][a.getY()]){
+					board[a.getX()][a.getY()] = null;
+					return true;
+				}
 			}
 		}
-		return false;
+		return false;	
 	}
 
 	public int isGameEnd(){
@@ -120,6 +124,27 @@ public class Board {
 		}
 		else {
 			return bk;
+		}
+	}
+	// no lose -1, white win return 0, black 1
+	public int whoWin(){
+		boolean iswk = false ,isbk = false;
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++) {
+				if(board[i][j]==bk){
+					isbk = true;
+				}
+				if(board[i][j]==wk){
+					iswk = true;
+				}
+			}
+		}
+		if(isbk == false){
+			return 0;
+		}else if(iswk == false){
+			return 1;
+		}else{
+			return -1;
 		}
 	}
 }
