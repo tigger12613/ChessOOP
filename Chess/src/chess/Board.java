@@ -44,13 +44,22 @@ public class Board {
 	}
 
 	public boolean move(Coordinate a,Coordinate b){
-		ArrayList<Coordinate> validList = validCoordinates(a);
-		for(int i=0; i<validList.size(); i++){
-			if( (validList.get(i).getX() == b.getX()) && (validList.get(i).getY() == b.getY()) ){
-				return true;
-			}
+		// ArrayList<Coordinate> validList = validCoordinates(a);
+		// for(int i=0; i<validList.size(); i++){
+		// 	if( (validList.get(i).getX() == b.getX()) && (validList.get(i).getY() == b.getY()) ){
+		// 		return true;
+		// 	}
+		// }
+		// return false;	
+		board[b.getX()][b.getY()] =  board[a.getX()][a.getY()];
+		
+		if(board[b.getX()][b.getY()] == board[a.getX()][a.getY()]){
+			board[a.getX()][a.getY()] = null;
+			return true;
 		}
-		return false;
+		else{
+			return false;
+		} 
 	}
 
 	public int isGameEnd(){
