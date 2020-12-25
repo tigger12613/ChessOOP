@@ -115,7 +115,7 @@ public class Cell extends JPanel implements Cloneable {
 	{
 		if(p!=null){
 			this.removeAll();
-			ImageIcon img=new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
+			ImageIcon img=new javax.swing.ImageIcon(this.getClass().getResource("img/" + p.getPath()));
 			content=new JLabel(img);
 			this.add(content);
 		}else{

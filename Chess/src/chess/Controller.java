@@ -66,7 +66,7 @@ public class Controller extends JFrame implements MouseListener {
 		board = new JPanel(new GridLayout(8, 8));
 
 		board.setMinimumSize(new Dimension(800, 700));
-		ImageIcon img = new ImageIcon(this.getClass().getResource("icon.png"));
+		ImageIcon img = new ImageIcon(this.getClass().getResource("img/icon.png"));
 		this.setIconImage(img.getImage());
 
 		// Cell cell;
@@ -103,7 +103,7 @@ public class Controller extends JFrame implements MouseListener {
 			@Override
 			public void paintComponent(Graphics g) {
 				try {
-					image = ImageIO.read(this.getClass().getResource("clash.jpg"));
+					image = ImageIO.read(this.getClass().getResource("img/clash.jpg"));
 				} catch (IOException ex) {
 					System.out.println("not found");
 				}
