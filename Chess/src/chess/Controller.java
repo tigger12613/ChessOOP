@@ -252,23 +252,6 @@ public class Controller extends JFrame implements MouseListener {
 
 	}
 
-	// A function to clean the highlights of possible destination cells
-	private void cleandestinations(ArrayList<Cell> destlist) // Function to clear the last move's destinations
-	{
-		ListIterator<Cell> it = destlist.listIterator();
-		while (it.hasNext())
-			it.next().removepossibledestination();
-	}
-
-	// A function that indicates the possible moves by highlighting the Cells
-	private void highlightdestinations(ArrayList<Cell> destlist) {
-		ListIterator<Cell> it = destlist.listIterator();
-		while (it.hasNext())
-			it.next().setpossibledestination();
-	}
-
-	// Other Irrelevant abstract function. Only the Click Event is captured.
-
 	class START implements ActionListener {
 
 		@SuppressWarnings("deprecation")
