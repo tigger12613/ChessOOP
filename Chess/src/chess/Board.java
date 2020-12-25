@@ -44,24 +44,6 @@ public class Board {
 	}
 
 	public boolean move(Coordinate a,Coordinate b){
-<<<<<<< HEAD
-		// ArrayList<Coordinate> validList = validCoordinates(a);
-		// for(int i=0; i<validList.size(); i++){
-		// 	if( (validList.get(i).getX() == b.getX()) && (validList.get(i).getY() == b.getY()) ){
-		// 		return true;
-		// 	}
-		// }
-		// return false;	
-		board[b.getX()][b.getY()] =  board[a.getX()][a.getY()];
-		
-		if(board[b.getX()][b.getY()] == board[a.getX()][a.getY()]){
-			board[a.getX()][a.getY()] = null;
-			return true;
-		}
-		else{
-			return false;
-		} 
-=======
 		ArrayList<Coordinate> validList = validCoordinates(a);
 		for(int i=0; i<validList.size(); i++){
 			if( (validList.get(i).getX() == b.getX()) && (validList.get(i).getY() == b.getY()) ){
@@ -73,7 +55,6 @@ public class Board {
 			}
 		}
 		return false;	
->>>>>>> myBranch
 	}
 
 	public int isGameEnd(){
