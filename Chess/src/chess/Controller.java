@@ -251,7 +251,6 @@ public class Controller extends JFrame implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-
 	class START implements ActionListener {
 
 		@SuppressWarnings("deprecation")

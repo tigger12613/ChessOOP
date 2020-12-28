@@ -39,7 +39,7 @@ public class Board {
 
 	public ArrayList<Coordinate> validCoordinates(Coordinate coordinate){
 		ArrayList<Coordinate> destList = board[coordinate.getX()][coordinate.getY()].move(this, coordinate);
-		ArrayList<Coordinate> newList = incheckfilter(destList, coordinate, board[coordinate.getX()][coordinate.getY()].getcolor());
+		ArrayList<Coordinate> newList = inCheckFilter(destList, coordinate, board[coordinate.getX()][coordinate.getY()].getcolor());
 		return newList;
 	}
 
@@ -83,7 +83,7 @@ public class Board {
 					Coordinate c = new Coordinate(i, j);
 					destList.clear();
 					destList = board[i][j].move(this, c);
-					destList = incheckfilter(destList, c, color);
+					destList = inCheckFilter(destList, c, color);
 					if (destList.size() != 0)
 						return false;
 				}
@@ -92,7 +92,7 @@ public class Board {
 		return true;
 	}
 
-	private ArrayList<Coordinate> incheckfilter(ArrayList<Coordinate> destList, Coordinate source, int color) {
+	private ArrayList<Coordinate> inCheckFilter(ArrayList<Coordinate> destList, Coordinate source, int color) {
 		ArrayList<Coordinate> newList = new ArrayList<Coordinate>();
 		Piece newboardstate[][] = new Piece[8][8];
 		ListIterator<Coordinate> it = destList.listIterator();
